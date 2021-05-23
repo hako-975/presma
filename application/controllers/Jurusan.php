@@ -7,10 +7,13 @@ class Jurusan extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Jurusan_model', 'jumo');
+		$this->load->model('Admin_model', 'admo');
 	}
 
 	public function index()
 	{
+		$this->admo->checkLoginAdmin();
+
 		$data['title']		= 'Jurusan';
 		$data['jurusan']	= $this->jumo->getJurusan();
 
@@ -26,11 +29,15 @@ class Jurusan extends CI_Controller
 
 	public function editJurusan($id)
 	{
+		$this->admo->checkLoginAdmin();
+
 		$this->jumo->editJurusan($id);
 	}
 
 	public function removeJurusan($id)
 	{
+		$this->admo->checkLoginAdmin();
+		
 		$this->jumo->removeJurusan($id);
 	}
 }

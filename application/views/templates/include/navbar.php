@@ -33,7 +33,7 @@
         <a href="profile.php" class="dropdown-item">
           <i class="far fa-fw fa-user"></i> Profil
         </a>
-        <a href="logout.php" class="dropdown-item">
+        <a href="<?= base_url('auth/logout'); ?>" class="dropdown-item">
           <i class="fas fa-fw fa-sign-out-alt"></i> Keluar
         </a>
       </div>

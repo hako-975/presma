@@ -7,10 +7,13 @@ class Log extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Log_model', 'lomo');
+		$this->load->model('Admin_model', 'admo');
 	}
 
 	public function index()
 	{
+		$this->admo->checkLoginAdmin();
+
 		$data['title']		= 'Log';
 		$data['log']	= $this->lomo->getLog();
 
