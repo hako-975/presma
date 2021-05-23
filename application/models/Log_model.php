@@ -10,7 +10,7 @@ class Log_model extends CI_Model
 		return $this->db->get('Log')->result_array();
 	}
 
-	public function addLog($isi_log, $id_user = 1)
+	public function addLog($isi_log, $id_user = 0)
 	{
 		$data = [
 			'isi_log' => $isi_log,

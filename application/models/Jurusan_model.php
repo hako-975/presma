@@ -7,6 +7,7 @@ class Jurusan_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->model('Log_model', 'lomo');
+		$this->load->model('Admin_model', 'admo');
 	}
 
 	public function getJurusan()
@@ -29,10 +30,9 @@ class Jurusan_model extends CI_Model
 		$this->db->insert('jurusan', $data);
 		$isi = 'Jurusan ' . $data['jurusan'] . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
-		/*
-			tambahkan id user
-		*/
-		$this->lomo->addLog($isi);
+
+		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$this->lomo->addLog($isi, $id_user);
 		redirect('jurusan');
 	}
 
@@ -47,10 +47,9 @@ class Jurusan_model extends CI_Model
 		$this->db->update('jurusan', $data, ['id_jurusan' => $id]);
 		$isi = 'Jurusan ' . $jurusan . ' berhasil diubah menjadi ' . $data['jurusan'];
 		$this->session->set_flashdata('message-success', $isi);
-		/*
-			tambahkan id user
-		*/
-		$this->lomo->addLog($isi);
+		
+		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$this->lomo->addLog($isi, $id_user);
 		redirect('jurusan');
 	}
 
@@ -60,10 +59,9 @@ class Jurusan_model extends CI_Model
 		$this->db->delete('jurusan', ['id_jurusan' => $id]);
 		$isi = 'Jurusan ' . $jurusan . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
-		/*
-			tambahkan id user
-		*/
-		$this->lomo->addLog($isi);
+		
+		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$this->lomo->addLog($isi, $id_user);
 		redirect('jurusan');
 	}
 }
