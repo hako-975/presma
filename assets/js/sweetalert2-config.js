@@ -1,4 +1,25 @@
-$(document).ready(function() {
+$(document).ready(function() 
+{
+	const flashDataSuccess = $('.flashdata-success').data('flashdata');
+
+	if (flashDataSuccess) {
+		Swal.fire({
+			title: 'Berhasil!',
+			text: flashDataSuccess + '!',
+			icon: 'success'
+		});
+	}
+
+	const flashDataFailed = $('.flashdata-failed').data('flashdata');
+
+	if (flashDataFailed) {
+		Swal.fire({
+			title: 'Gagal!',
+			text: flashDataFailed + '!',
+			icon: 'error'
+		});
+	}
+
 	$('.btn-delete').on('click', function(e){
 		e.preventDefault();
 
@@ -7,7 +28,7 @@ $(document).ready(function() {
 
 		Swal.fire({
 		  title: 'Apakah anda yakin?',
-		  text: "Ingin menghapus data " + nama,
+		  text: "Ingin menghapus data " + nama + '!',
 		  icon: 'warning',
 		  showCancelButton: true,
 		  cancelButtonColor: '#3085d6',

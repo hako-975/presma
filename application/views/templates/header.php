@@ -3,7 +3,7 @@
 <head>
   <?php include 'include/js.php'; ?>
   <?php include 'include/css.php'; ?>
-  <title>Selamat Datang</title>
+  <title><?= $title; ?></title>
 </head>
 <body>
           

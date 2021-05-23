@@ -16,5 +16,7 @@
 <link rel="stylesheet" href="<?= base_url('assets/vendor/fancybox/css/jquery.fancybox.min.css'); ?>">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<!-- My CSS -->
+<link rel="stylesheet" href="<?= base_url('assets/css/presma.css'); ?>">
 <!-- Favicon -->
 <link rel="icon" href="<?= base_url('assets/img/img_properties/favicon.png'); ?>">

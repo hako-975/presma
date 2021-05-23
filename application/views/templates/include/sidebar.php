@@ -24,7 +24,7 @@
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-cog"></i>
+            <i class="nav-icon fas fa-id-card-alt"></i>
             <p>
               Jabatan
             </p>
@@ -36,6 +36,24 @@
             <p>
               Pengguna
             </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url('jurusan'); ?>" class="nav-link">
+            <i class="fas fa-user-graduate nav-icon"></i>
+            <p>Jurusan</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-user-friends nav-icon"></i>
+            <p>Rombel</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-calendar nav-icon"></i>
+            <p>Periode</p>
           </a>
         </li>
         <li class="nav-item">
@@ -52,8 +70,21 @@
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
+            <i class="fas fa-vote-yea nav-icon"></i>
+            <p>Vote</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
             <i class="fas fa-file nav-icon"></i>
             <p>Laporan</p>
+          </a>
+        </li>
+        <div class="dropdown-divider"></div>
+        <li class="nav-item">
+          <a href="<?= base_url('log'); ?>" class="nav-link">
+            <i class="fas fa-fw fa-history nav-icon"></i>
+            <p>Log</p>
           </a>
         </li>
         <!-- <div class="dropdown-divider"></div>

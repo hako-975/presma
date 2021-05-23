@@ -1,0 +1,23 @@
+/*------------ header ------------*/
+.header-title {
+  margin: 5px 0;
+  text-align: center;
+}
+
+.header-button {
+  margin: 5px 0;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .header-title {
+    margin: 5px 0;
+    text-align: left;
+  }
+
+  .header-button {
+    margin: 5px 0;
+    text-align: right;
+  }
+}
+/*------------ header ------------*/
