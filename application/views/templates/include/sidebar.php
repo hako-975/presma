@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="<?= base_url('role'); ?>" class="nav-link">
             <i class="nav-icon fas fa-id-card-alt"></i>
             <p>
               Jabatan

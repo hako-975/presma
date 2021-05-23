@@ -23,3 +23,4 @@
 <script src="<?= base_url('assets/js/fancybox-config.js'); ?>"></script>
 <script src="<?= base_url('assets/js/sweetalert2-config.js'); ?>"></script>
 <script src="<?= base_url('assets/js/popover-config.js'); ?>"></script>
+<script src="<?= base_url('assets/js/toast-config.js'); ?>"></script>

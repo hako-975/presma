@@ -16,6 +16,21 @@
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
+    
+    <?php if (form_error('jurusan')): ?>
+      <div class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="z-index: 999999; position: fixed; right: 1.5rem; bottom: 1.5rem">
+        <div class="toast-header">
+          <strong class="mr-auto">Gagal!</strong>
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+          <?= form_error('jurusan'); ?>
+        </div>
+      </div>
+    <?php endif ?>
+
     <div class="row my-3">
       <div class="col-lg">
         <div class="table-responsive">
