@@ -1,12 +1,26 @@
+<?php 
+if (isset($behavior)) 
+{
+  echo "
+    <script>
+      $(document).ready(function() {
+        $('#$behavior').modal('show');
+      });
+    </script>
+  ";
+}
+
+?>
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user-graduate"></i> User</h1>
+        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user"></i> Pengguna</h1>
       </div>
       <div class="col header-button">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal"><i class="fas fa-fw fa-plus"></i> Tambah User</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal"><i class="fas fa-fw fa-plus"></i> Tambah Pengguna</button>
       </div>
     </div>
   </div>
@@ -39,7 +53,7 @@
               <tr>
                 <th>No.</th>
                 <th>Username</th>
-                <th>Role</th>
+                <th>Jabatan</th>
                 <th style="width: 12.5rem">Aksi</th>
               </tr>
             </thead>
@@ -60,22 +74,22 @@
                           <form method="post" action="<?= base_url('user/editUser/' . $du['id_user']); ?>">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="editUserModalLabel<?= $du['id_user']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah User</h5>
+                                <h5 class="modal-title" id="editUserModalLabel<?= $du['id_user']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Pengguna</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
                               <div class="modal-body">
                                 <div class="form-group">
-                                  <label for="username" class="font-weight-normal">Username</label>
-                                  <input type="text" id="username" class="form-control <?= (form_error('username')) ? 'is-invalid' : ''; ?>" name="username" required value="<?= (form_error('username') ? set_value('username') : $du['username']); ?>">
+                                  <label for="username<?= $du['id_user']; ?>" class="font-weight-normal">Username</label>
+                                  <input type="text" id="username<?= $du['id_user']; ?>" class="form-control <?= (form_error('username')) ? 'is-invalid' : ''; ?>" name="username" required value="<?= (form_error('username') ? set_value('username') : $du['username']); ?>">
                                   <div class="invalid-feedback">
                                     <?= form_error('username'); ?>
                                   </div>
                                 </div>
                                 <div class="form-group">
-                                  <label for="id_role" class="font-weight-normal">Jabatan</label>
-                                  <select id="id_role" class="form-control <?= (form_error('id_role')) ? 'is-invalid' : ''; ?>" name="id_role" required>
+                                  <label for="id_role<?= $du['id_user']; ?>" class="font-weight-normal">Jabatan</label>
+                                  <select id="id_role<?= $du['id_user']; ?>" class="custom-select <?= (form_error('id_role')) ? 'is-invalid' : ''; ?>" name="id_role" required>
                                     <?php if (set_value('id_role') != null): ?>
                                       <?php 
                                         $id_role_old = set_value('id_role');
@@ -127,10 +141,16 @@
     <form method="post">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addUserModalLabel"><i class="fas fa-fw fa-plus"></i> Tambah User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="addUserModalLabel"><i class="fas fa-fw fa-plus"></i> Tambah Pengguna</h5>
+          <?php if (isset($behavior)): ?>
+            <a href="<?= base_url('user'); ?>" class="close">
+              <span aria-hidden="true">&times;</span>
+            </a>
+          <?php else: ?>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          <?php endif ?>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -156,7 +176,7 @@
           </div>
           <div class="form-group">
             <label for="id_role" class="font-weight-normal">Jabatan</label>
-            <select id="id_role" class="form-control <?= (form_error('id_role')) ? 'is-invalid' : ''; ?>" name="id_role" required>
+            <select id="id_role" class="custom-select <?= (form_error('id_role')) ? 'is-invalid' : ''; ?>" name="id_role" required>
               <?php if (set_value('id_role') != null): ?>
                 <?php 
                   $id_role_old = set_value('id_role');
@@ -176,7 +196,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
+          <?php if (isset($behavior)): ?>
+            <a href="<?= base_url('user'); ?>" class="btn btn-danger"><i class="fas fa-fw fa-times"></i> Tutup</a>
+          <?php else: ?>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
+          <?php endif ?>
           <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
         </div>
       </div>

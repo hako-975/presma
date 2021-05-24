@@ -28,7 +28,7 @@ class Role_model extends CI_Model
 		];
 
 		$this->db->insert('role', $data);
-		$isi = 'Role ' . $data['role'] . ' berhasil ditambahkan';
+		$isi = 'Jabatan ' . $data['role'] . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
 		$id_user = $this->admo->getDataUserAdmin()['id_user'];
@@ -42,7 +42,7 @@ class Role_model extends CI_Model
 		
 		if ($role == 'Administrator')
 		{
-			$isi = 'Akses ditolak! Role ' . $role . ' tidak boleh diubah';
+			$isi = 'Akses ditolak! Jabatan ' . $role . ' tidak boleh diubah';
 			$this->session->set_flashdata('message-failed', $isi);
 			
 			$id_user = $this->admo->getDataUserAdmin()['id_user'];
@@ -56,7 +56,7 @@ class Role_model extends CI_Model
 		];
 
 		$this->db->update('role', $data, ['id_role' => $id]);
-		$isi = 'Role ' . $role . ' berhasil diubah menjadi ' . $data['role'];
+		$isi = 'Jabatan ' . $role . ' berhasil diubah menjadi ' . $data['role'];
 		$this->session->set_flashdata('message-success', $isi);
 		
 		$id_user = $this->admo->getDataUserAdmin()['id_user'];
@@ -70,7 +70,7 @@ class Role_model extends CI_Model
 		
 		if ($role == 'Administrator')
 		{
-			$isi = 'Akses ditolak! Role ' . $role . ' tidak boleh dihapus';
+			$isi = 'Akses ditolak! Jabatan ' . $role . ' tidak boleh dihapus';
 			$this->session->set_flashdata('message-failed', $isi);
 			
 			$id_user = $this->admo->getDataUserAdmin()['id_user'];
@@ -80,7 +80,7 @@ class Role_model extends CI_Model
 		}
 
 		$this->db->delete('role', ['id_role' => $id]);
-		$isi = 'Role ' . $role . ' berhasil dihapus';
+		$isi = 'Jabatan ' . $role . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
 		$id_user = $this->admo->getDataUserAdmin()['id_user'];

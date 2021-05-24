@@ -1,12 +1,26 @@
+<?php 
+if (isset($behavior)) 
+{
+  echo "
+    <script>
+      $(document).ready(function() {
+        $('#$behavior').modal('show');
+      });
+    </script>
+  ";
+}
+
+?>
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user-graduate"></i> Role</h1>
+        <h1 class="m-0 text-dark"><i class="fas fa-id-card-alt"></i> Jabatan</h1>
       </div>
       <div class="col header-button">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoleModal"><i class="fas fa-fw fa-plus"></i> Tambah Role</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoleModal"><i class="fas fa-fw fa-plus"></i> Tambah Jabatan</button>
       </div>
     </div>
   </div>
@@ -38,7 +52,7 @@
             <thead class="thead-dark">
               <tr>
                 <th>No.</th>
-                <th>Role</th>
+                <th>Jabatan</th>
                 <th style="width: 12.5rem">Aksi</th>
               </tr>
             </thead>
@@ -58,15 +72,15 @@
                           <form method="post" action="<?= base_url('role/editRole/' . $dr['id_role']); ?>">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="editRoleModalLabel<?= $dr['id_role']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Role</h5>
+                                <h5 class="modal-title" id="editRoleModalLabel<?= $dr['id_role']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Jabatan</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
                               <div class="modal-body">
                                 <div class="form-group">
-                                  <label for="role" class="font-weight-normal">Role</label>
-                                  <input type="text" id="role" class="form-control <?= (form_error('role')) ? 'is-invalid' : ''; ?>" name="role" required value="<?= (form_error('role') ? set_value('role') : $dr['role']); ?>">
+                                  <label for="role<?= $dr['id_role']; ?>" class="font-weight-normal">Jabatan</label>
+                                  <input type="text" id="role<?= $dr['id_role']; ?>" class="form-control <?= (form_error('role')) ? 'is-invalid' : ''; ?>" name="role" required value="<?= (form_error('role') ? set_value('role') : $dr['role']); ?>">
                                   <div class="invalid-feedback">
                                     <?= form_error('role'); ?>
                                   </div>
@@ -101,14 +115,20 @@
     <form method="post">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addRoleModalLabel"><i class="fas fa-fw fa-plus"></i> Tambah Role</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="addRoleModalLabel"><i class="fas fa-fw fa-plus"></i> Tambah Jabatan</h5>
+          <?php if (isset($behavior)): ?>
+            <a href="<?= base_url('role'); ?>" class="close">
+              <span aria-hidden="true">&times;</span>
+            </a>
+          <?php else: ?>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          <?php endif ?>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="role" class="font-weight-normal">Role</label>
+            <label for="role" class="font-weight-normal">Jabatan</label>
             <input type="text" id="role" class="form-control <?= (form_error('role')) ? 'is-invalid' : ''; ?>" name="role" required value="<?= set_value('role'); ?>">
             <div class="invalid-feedback">
               <?= form_error('role'); ?>
@@ -116,7 +136,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
+          <?php if (isset($behavior)): ?>
+            <a href="<?= base_url('role'); ?>" class="btn btn-danger"><i class="fas fa-fw fa-times"></i> Tutup</a>
+          <?php else: ?>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
+          <?php endif ?>
           <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
         </div>
       </div>

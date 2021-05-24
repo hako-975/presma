@@ -58,4 +58,26 @@ class Jurusan extends CI_Controller
 		
 		$this->jumo->removeJurusan($id);
 	}
+
+	public function setFlashData($behavior)
+	{
+		$this->admo->checkLoginAdmin();
+
+		$data['title']		= 'Jurusan';
+		$data['jurusan']	= $this->jumo->getJurusan();
+		$data['dataUser']	= $this->admo->getDataUserAdmin();
+		$data['behavior']	= $behavior;
+
+		$this->form_validation->set_rules('jurusan', 'Jurusan', 'required|trim|is_unique[jurusan.jurusan]');
+		if ($this->form_validation->run() == false) 
+		{
+			$this->load->view('templates/header-admin', $data);
+			$this->load->view('jurusan/index', $data);
+			$this->load->view('templates/footer-admin', $data);
+		} 
+		else 
+		{
+		    $this->jumo->addJurusan();
+		}
+	}
 }

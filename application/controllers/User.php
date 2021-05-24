@@ -15,7 +15,7 @@ class User extends CI_Controller
 	{
 		$this->admo->checkLoginAdmin();
 
-		$data['title']		= 'User';
+		$data['title']		= 'Pengguna';
 		$data['user']		= $this->usmo->getUser();
 		$data['role']		= $this->romo->getRole();
 		$data['dataUser']	= $this->admo->getDataUserAdmin();
@@ -40,7 +40,7 @@ class User extends CI_Controller
 	{
 		$this->admo->checkLoginAdmin();
 
-		$data['title']		= 'User';
+		$data['title']		= 'Pengguna';
 		$data['user']		= $this->usmo->getUser();
 		$data['role']		= $this->romo->getRole();
 		$data['dataUser']	= $this->admo->getDataUserAdmin();
@@ -65,5 +65,31 @@ class User extends CI_Controller
 		$this->admo->checkLoginAdmin();
 		
 		$this->usmo->removeUser($id);
+	}
+
+	public function setFlashData($behavior)
+	{
+		$this->admo->checkLoginAdmin();
+
+		$data['title']		= 'Pengguna';
+		$data['user']		= $this->usmo->getUser();
+		$data['role']		= $this->romo->getRole();
+		$data['dataUser']	= $this->admo->getDataUserAdmin();
+		$data['behavior']	= $behavior;
+
+		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.username]');
+		$this->form_validation->set_rules('password', 'Password', 'required|matches[password_verify]');
+		$this->form_validation->set_rules('password_verify', 'Verifikasi Password', 'required|matches[password]');
+		$this->form_validation->set_rules('id_role', 'Jabatan', 'required');
+		if ($this->form_validation->run() == false) 
+		{
+			$this->load->view('templates/header-admin', $data);
+			$this->load->view('user/index', $data);
+			$this->load->view('templates/footer-admin', $data);
+		}
+		else 
+		{
+		    $this->usmo->addUser();
+		}
 	}
 }

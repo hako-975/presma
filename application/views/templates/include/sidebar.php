@@ -45,13 +45,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="<?= base_url('rombel'); ?>" class="nav-link">
             <i class="fas fa-user-friends nav-icon"></i>
             <p>Rombel</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="<?= base_url('periode'); ?>" class="nav-link">
             <i class="fas fa-calendar nav-icon"></i>
             <p>Periode</p>
           </a>
@@ -84,9 +84,34 @@
         <li class="nav-item">
           <a href="<?= base_url('log'); ?>" class="nav-link">
             <i class="fas fa-fw fa-history nav-icon"></i>
-            <p>Log</p>
+            <p>Riwayat</p>
           </a>
         </li>
+        
+        <!-- <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Starter Pages
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Active Page</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Inactive Page</p>
+              </a>
+            </li>
+          </ul>
+        </li> -->
+
         <!-- <div class="dropdown-divider"></div>
         <li class="nav-item">
           <a href="#" class="nav-link">

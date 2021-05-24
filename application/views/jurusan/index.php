@@ -1,3 +1,17 @@
+<?php 
+if (isset($behavior)) 
+{
+  echo "
+    <script>
+      $(document).ready(function() {
+        $('#$behavior').modal('show');
+      });
+    </script>
+  ";
+}
+
+?>
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -64,8 +78,8 @@
                             </div>
                             <div class="modal-body">
                               <div class="form-group">
-                                <label for="jurusan" class="font-weight-normal">Jurusan</label>
-                                <input type="text" id="jurusan" class="form-control <?= (form_error('jurusan')) ? 'is-invalid' : ''; ?>" name="jurusan" required value="<?= (form_error('jurusan') ? set_value('jurusan') : $dj['jurusan']); ?>">
+                                <label for="jurusan<?= $dj['id_jurusan']; ?>" class="font-weight-normal">Jurusan</label>
+                                <input type="text" id="jurusan<?= $dj['id_jurusan']; ?>" class="form-control <?= (form_error('jurusan')) ? 'is-invalid' : ''; ?>" name="jurusan" required value="<?= (form_error('jurusan') ? set_value('jurusan') : $dj['jurusan']); ?>">
                                 <div class="invalid-feedback">
                                   <?= form_error('jurusan'); ?>
                                 </div>
@@ -101,9 +115,16 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addJurusanModalLabel"><i class="fas fa-fw fa-plus"></i> Tambah Jurusan</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+ 
+          <?php if (isset($behavior)): ?>
+            <a href="<?= base_url('jurusan'); ?>" class="close">
+              <span aria-hidden="true">&times;</span>
+            </a>
+          <?php else: ?>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          <?php endif ?>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -115,7 +136,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
+          <?php if (isset($behavior)): ?>
+            <a href="<?= base_url('jurusan'); ?>" class="btn btn-danger"><i class="fas fa-fw fa-times"></i> Tutup</a>
+          <?php else: ?>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
+          <?php endif ?>
           <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
         </div>
       </div>

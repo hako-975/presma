@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user-graduate"></i> Log</h1>
+        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user-graduate"></i> Riwayat</h1>
       </div>
     </div>
   </div>
@@ -20,8 +20,8 @@
             <thead class="thead-dark">
               <tr>
                 <th>No.</th>
-                <th>Isi Log</th>
-                <th>Tanggal Log</th>
+                <th>Isi Riwayat</th>
+                <th>Tanggal Riwayat</th>
                 <th>User</th>
               </tr>
             </thead>
