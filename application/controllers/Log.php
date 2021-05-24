@@ -15,7 +15,8 @@ class Log extends CI_Controller
 		$this->admo->checkLoginAdmin();
 
 		$data['title']		= 'Log';
-		$data['log']	= $this->lomo->getLog();
+		$data['log']		= $this->lomo->getLog();
+		$data['dataUser']	= $this->admo->getDataUserAdmin();
 
 		$this->load->view('templates/header-admin', $data);
 		$this->load->view('log/index', $data);

@@ -13,7 +13,7 @@ class Jurusan_model extends CI_Model
 	public function getJurusan()
 	{
 		$this->db->order_by('jurusan', 'asc');
-		return $this->db->get('Jurusan')->result_array();
+		return $this->db->get('jurusan')->result_array();
 	}
 
 	public function getJurusanById($id)

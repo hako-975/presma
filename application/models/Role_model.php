@@ -13,7 +13,7 @@ class Role_model extends CI_Model
 	public function getRole()
 	{
 		$this->db->order_by('role', 'asc');
-		return $this->db->get('Role')->result_array();
+		return $this->db->get('role')->result_array();
 	}
 
 	public function getRoleById($id)
@@ -48,6 +48,7 @@ class Role_model extends CI_Model
 			$id_user = $this->admo->getDataUserAdmin()['id_user'];
 			$this->lomo->addLog($isi, $id_user);
 			redirect('role');
+			exit();
 		}
 
 		$data = [
@@ -75,6 +76,7 @@ class Role_model extends CI_Model
 			$id_user = $this->admo->getDataUserAdmin()['id_user'];
 			$this->lomo->addLog($isi, $id_user);
 			redirect('role');
+			exit();
 		}
 
 		$this->db->delete('role', ['id_role' => $id]);

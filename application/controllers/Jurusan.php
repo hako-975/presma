@@ -16,13 +16,17 @@ class Jurusan extends CI_Controller
 
 		$data['title']		= 'Jurusan';
 		$data['jurusan']	= $this->jumo->getJurusan();
+		$data['dataUser']	= $this->admo->getDataUserAdmin();
 
 		$this->form_validation->set_rules('jurusan', 'Jurusan', 'required|trim|is_unique[jurusan.jurusan]');
-		if ($this->form_validation->run() == false) {
+		if ($this->form_validation->run() == false) 
+		{
 			$this->load->view('templates/header-admin', $data);
 			$this->load->view('jurusan/index', $data);
 			$this->load->view('templates/footer-admin', $data);
-		} else {
+		} 
+		else 
+		{
 		    $this->jumo->addJurusan();
 		}
 	}
@@ -30,8 +34,22 @@ class Jurusan extends CI_Controller
 	public function editJurusan($id)
 	{
 		$this->admo->checkLoginAdmin();
+		
+		$data['title']		= 'Jurusan';
+		$data['jurusan']	= $this->jumo->getJurusan();
+		$data['dataUser']	= $this->admo->getDataUserAdmin();
 
-		$this->jumo->editJurusan($id);
+		$this->form_validation->set_rules('jurusan', 'Jurusan', 'required|trim|is_unique[jurusan.jurusan]');
+		if ($this->form_validation->run() == false) 
+		{
+			$this->load->view('templates/header-admin', $data);
+			$this->load->view('jurusan/index', $data);
+			$this->load->view('templates/footer-admin', $data);
+		}
+		else
+		{
+			$this->jumo->editJurusan($id);
+		}
 	}
 
 	public function removeJurusan($id)

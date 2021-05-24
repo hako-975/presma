@@ -15,14 +15,18 @@ class Role extends CI_Controller
 		$this->admo->checkLoginAdmin();
 
 		$data['title']		= 'Role';
-		$data['role']	= $this->romo->getRole();
+		$data['role']		= $this->romo->getRole();
+		$data['dataUser']	= $this->admo->getDataUserAdmin();
 
 		$this->form_validation->set_rules('role', 'Role', 'required|trim|is_unique[role.role]');
-		if ($this->form_validation->run() == false) {
+		if ($this->form_validation->run() == false) 
+		{
 			$this->load->view('templates/header-admin', $data);
 			$this->load->view('role/index', $data);
 			$this->load->view('templates/footer-admin', $data);
-		} else {
+		} 
+		else 
+		{
 		    $this->romo->addRole();
 		}
 	}
@@ -30,8 +34,21 @@ class Role extends CI_Controller
 	public function editRole($id)
 	{
 		$this->admo->checkLoginAdmin();
+		$data['title']		= 'Role';
+		$data['role']		= $this->romo->getRole();
+		$data['dataUser']	= $this->admo->getDataUserAdmin();
 
-		$this->romo->editRole($id);
+		$this->form_validation->set_rules('role', 'Role', 'required|trim|is_unique[role.role]');
+		if ($this->form_validation->run() == false)
+		{
+			$this->load->view('templates/header-admin', $data);
+			$this->load->view('role/index', $data);
+			$this->load->view('templates/footer-admin', $data);
+		} 
+		else 
+		{
+			$this->romo->editRole($id);
+		}
 	}
 
 	public function removeRole($id)

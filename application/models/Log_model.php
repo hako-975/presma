@@ -7,7 +7,7 @@ class Log_model extends CI_Model
 	{
 		$this->db->join('user', 'log.id_user = user.id_user');
 		$this->db->order_by('tgl_log', 'desc');
-		return $this->db->get('Log')->result_array();
+		return $this->db->get('log')->result_array();
 	}
 
 	public function addLog($isi_log, $id_user = 0)

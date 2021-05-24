@@ -17,7 +17,7 @@
 <section class="content">
   <div class="container-fluid">
     
-    <?php if (form_error('role')): ?>
+    <?php if (validation_errors()): ?>
       <div class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="z-index: 999999; position: fixed; right: 1.5rem; bottom: 1.5rem">
         <div class="toast-header">
           <strong class="mr-auto">Gagal!</strong>
@@ -26,7 +26,7 @@
           </button>
         </div>
         <div class="toast-body">
-          <?= form_error('role'); ?>
+          <?= validation_errors(); ?>
         </div>
       </div>
     <?php endif ?>

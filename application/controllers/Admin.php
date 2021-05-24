@@ -13,7 +13,9 @@ class Admin extends CI_Controller
 	{
 		$this->admo->checkLoginAdmin();
 
+		$data['dataUser']	= $this->admo->getDataUserAdmin();
 		$data['title']		= 'Dasbor';
+		
 		$this->load->view('templates/header-admin', $data);
 		$this->load->view('admin/index', $data);
 		$this->load->view('templates/footer-admin', $data);

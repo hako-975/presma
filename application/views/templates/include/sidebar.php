@@ -12,10 +12,10 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview menu-open">
-          <a href="#" class="nav-link"><i class="nav-icon fas fa-fw fa-user"></i> <p>Username</p></a>
+          <a href="#" class="nav-link"><i class="nav-icon fas fa-fw fa-user"></i> <p><?= $dataUser['username']; ?></p></a>
         </li>
         <li class="nav-item has-treeview menu-open">
-          <a href="#" class="nav-link active">
+          <a href="<?= base_url('admin'); ?>" class="nav-link active">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dasbor
@@ -31,7 +31,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="<?= base_url('user'); ?>" class="nav-link">
             <i class="nav-icon fas fa-user"></i>
             <p>
               Pengguna
