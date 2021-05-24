@@ -57,7 +57,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="<?= base_url('mahasiswa'); ?>" class="nav-link">
             <i class="fas fa-users nav-icon"></i>
             <p>Mahasiswa</p>
           </a>
