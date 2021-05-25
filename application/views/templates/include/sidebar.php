@@ -63,7 +63,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="<?= base_url('kandidat'); ?>" class="nav-link">
             <i class="fas fa-user-tie nav-icon"></i>
             <p>Kandidat</p>
           </a>

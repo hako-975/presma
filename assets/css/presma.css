@@ -21,3 +21,26 @@
   }
 }
 /*------------ header ------------*/
+
+/*------------ textarea ------------*/
+textarea {
+  min-height: 90px;
+  max-height: 120px;
+}
+/*------------ textarea ------------*/
+
+/*------------ img-size ------------*/
+.img-w-100 {
+  width: 100px;
+}
+/*------------ img-size ------------*/
+
+/*------------ table align-middle ------------*/
+th {
+  vertical-align: middle !important;
+}
+
+td {
+  vertical-align: middle !important;
+}
+/*------------ table align-middle ------------*/
