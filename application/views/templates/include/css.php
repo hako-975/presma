@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="<?= base_url('assets/vendor/datatables/css/dataTables.bootstrap4.min.css'); ?>">
 <!-- fancybox -->
 <link rel="stylesheet" href="<?= base_url('assets/vendor/fancybox/css/jquery.fancybox.min.css'); ?>">
+<!-- select2 -->
+<link rel="stylesheet" href="<?= base_url('assets/vendor/select2/css/select2.min.css'); ?>">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <!-- My CSS -->

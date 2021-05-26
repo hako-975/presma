@@ -13,6 +13,8 @@
 <script src="<?= base_url('assets/vendor/datatables/js/dataTables.bootstrap4.min.js'); ?>"></script>
 <!-- fancybox -->
 <script src="<?= base_url('assets/vendor/fancybox/js/jquery.fancybox.min.js'); ?>"></script>
+<!-- select2 -->
+<script src="<?= base_url('assets/vendor/select2/js/select2.min.js'); ?>"></script>
 <!-- sweetalert2 -->
 <script src="<?= base_url('assets/vendor/sweetalert2/sweetalert2.all.min.js'); ?>"></script>
 <!-- AdminLTE App -->
@@ -21,6 +23,7 @@
 <!-- config -->
 <script src="<?= base_url('assets/js/datatables-config.js'); ?>"></script>
 <script src="<?= base_url('assets/js/fancybox-config.js'); ?>"></script>
+<script src="<?= base_url('assets/js/select2-config.js'); ?>"></script>
 <script src="<?= base_url('assets/js/sweetalert2-config.js'); ?>"></script>
 <script src="<?= base_url('assets/js/popover-config.js'); ?>"></script>
 <script src="<?= base_url('assets/js/toast-config.js'); ?>"></script>
