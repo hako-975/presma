@@ -162,9 +162,13 @@ if (isset($behavior))
                 ?>
                 <option value="<?= set_value('id_jurusan'); ?>"><?= $jurusan_old['jurusan']; ?></option>
               <?php endif ?>
-              <?php foreach ($jurusan as $dr): ?>
-                <?php if ($dr['jurusan'] != 'Administrator'): ?>
-                  <option value="<?= $dr['id_jurusan']; ?>"><?= $dr['jurusan']; ?></option>
+              <?php foreach ($jurusan as $dj): ?>
+                <?php if (set_value('id_jurusan') != null): ?>
+                  <?php if ($id_jurusan_old != $dj['id_jurusan']): ?>
+                    <option value="<?= $dj['id_jurusan']; ?>"><?= $dj['jurusan']; ?></option>
+                  <?php endif ?>
+                <?php else: ?>
+                  <option value="<?= $dj['id_jurusan']; ?>"><?= $dj['jurusan']; ?></option>
                 <?php endif ?>
               <?php endforeach ?>
             </select>

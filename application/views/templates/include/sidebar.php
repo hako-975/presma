@@ -69,7 +69,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="<?= base_url('vote'); ?>" class="nav-link">
             <i class="fas fa-vote-yea nav-icon"></i>
             <p>Vote</p>
           </a>

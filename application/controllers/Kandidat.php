@@ -6,6 +6,7 @@ class Kandidat extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('Periode_model', 'pemo');
 		$this->load->model('Kandidat_model', 'kamo');
 		$this->load->model('Admin_model', 'admo');
 	}
@@ -15,6 +16,7 @@ class Kandidat extends CI_Controller
 		$this->admo->checkLoginAdmin();
 
 		$data['title']		= 'Kandidat';
+		$data['periode']	= $this->pemo->getPeriode();
 		$data['kandidat']	= $this->kamo->getKandidat();
 		$data['dataUser']	= $this->admo->getDataUserAdmin();
 
@@ -22,7 +24,8 @@ class Kandidat extends CI_Controller
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 		$this->form_validation->set_rules('visi', 'Visi', 'required|trim');
 		$this->form_validation->set_rules('misi', 'Misi', 'required|trim');
-		$this->form_validation->set_rules('no_urut', 'No. Urut', 'required|trim|is_unique[kandidat.no_urut]');
+		$this->form_validation->set_rules('no_urut', 'No. Urut', 'required|trim|is_natural_no_zero|is_unique[kandidat.no_urut]');
+		$this->form_validation->set_rules('id_periode', 'Periode', 'required|trim');
 		if ($this->form_validation->run() == false) 
 		{
 			$this->load->view('templates/header-admin', $data);
@@ -40,12 +43,16 @@ class Kandidat extends CI_Controller
 		$this->admo->checkLoginAdmin();
 		
 		$data['title']		= 'Kandidat';
+		$data['periode']	= $this->pemo->getPeriode();
 		$data['kandidat']	= $this->kamo->getKandidat();
 		$data['dataUser']	= $this->admo->getDataUserAdmin();
-
+		
+		$this->form_validation->set_rules('nim', 'NIM', 'required|trim');
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 		$this->form_validation->set_rules('visi', 'Visi', 'required|trim');
 		$this->form_validation->set_rules('misi', 'Misi', 'required|trim');
+		$this->form_validation->set_rules('no_urut', 'No. Urut', 'required|trim|is_natural_no_zero');
+		$this->form_validation->set_rules('id_periode', 'Periode', 'required|trim');
 		if ($this->form_validation->run() == false) 
 		{
 			$this->load->view('templates/header-admin', $data);
@@ -70,6 +77,7 @@ class Kandidat extends CI_Controller
 		$this->admo->checkLoginAdmin();
 
 		$data['title']		= 'Kandidat';
+		$data['periode']	= $this->pemo->getPeriode();
 		$data['kandidat']	= $this->kamo->getKandidat();
 		$data['dataUser']	= $this->admo->getDataUserAdmin();
 		$data['behavior']	= $behavior;
@@ -78,7 +86,8 @@ class Kandidat extends CI_Controller
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 		$this->form_validation->set_rules('visi', 'Visi', 'required|trim');
 		$this->form_validation->set_rules('misi', 'Misi', 'required|trim');
-		$this->form_validation->set_rules('no_urut', 'No. Urut', 'required|trim|is_unique[kandidat.no_urut]');
+		$this->form_validation->set_rules('no_urut', 'No. Urut', 'required|trim|is_natural_no_zero|is_unique[kandidat.no_urut]');
+		$this->form_validation->set_rules('id_periode', 'Periode', 'required|trim');
 		if ($this->form_validation->run() == false) 
 		{
 			$this->load->view('templates/header-admin', $data);

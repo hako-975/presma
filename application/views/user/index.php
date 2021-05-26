@@ -186,7 +186,13 @@ if (isset($behavior))
               <?php endif ?>
               <?php foreach ($role as $dr): ?>
                 <?php if ($dr['role'] != 'Administrator'): ?>
-                  <option value="<?= $dr['id_role']; ?>"><?= $dr['role']; ?></option>
+                  <?php if (set_value('id_role') != null): ?>
+                    <?php if ($id_role_old != $dr['id_role']): ?>
+                      <option value="<?= $dr['id_role']; ?>"><?= $dr['role']; ?></option>
+                    <?php endif ?>
+                  <?php else: ?>
+                    <option value="<?= $dr['id_role']; ?>"><?= $dr['role']; ?></option>
+                  <?php endif ?>
                 <?php endif ?>
               <?php endforeach ?>
             </select>

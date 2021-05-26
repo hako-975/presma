@@ -45,7 +45,7 @@ class User extends CI_Controller
 		$data['role']		= $this->romo->getRole();
 		$data['dataUser']	= $this->admo->getDataUserAdmin();
 
-		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.username]');
+		$this->form_validation->set_rules('username', 'Username', 'required|trim');
 		// $this->form_validation->set_rules('password', 'Password', 'required');
 		$this->form_validation->set_rules('id_role', 'Jabatan', 'required');
 		if ($this->form_validation->run() == false) 

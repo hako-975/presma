@@ -45,6 +45,7 @@ class Mahasiswa extends CI_Controller
 		$data['rombel']		= $this->romo->getRombel();
 		$data['dataUser']	= $this->admo->getDataUserAdmin();
 
+		$this->form_validation->set_rules('nim', 'NIM', 'required|trim');
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required|trim');
 		$this->form_validation->set_rules('id_rombel', 'Rombel', 'required|trim');

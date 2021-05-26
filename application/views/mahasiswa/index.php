@@ -196,12 +196,19 @@ if (isset($behavior))
               <?php if (set_value('id_rombel') != null): ?>
                 <?php 
                   $id_rombel_old = set_value('id_rombel');
+                  $this->db->join('jurusan', 'rombel.id_jurusan = jurusan.id_jurusan');
                   $rombel_old = $this->db->get_where('rombel', ['id_rombel' => $id_rombel_old])->row_array();
                 ?>
-                <option value="<?= set_value('id_rombel'); ?>"><?= $rombel_old['rombel']; ?></option>
+                <option value="<?= set_value('id_rombel'); ?>"><?= $rombel_old['jurusan']; ?>, semester <?= $rombel_old['semester']; ?></option>
               <?php endif ?>
               <?php foreach ($rombel as $dr): ?>
-                <option value="<?= $dr['id_rombel']; ?>"><?= $dr['jurusan']; ?>, semester <?= $dr['semester']; ?></option>
+                <?php if (set_value('id_rombel') != null): ?>
+                  <?php if ($id_rombel_old != $dr['id_rombel']): ?>
+                    <option value="<?= $dr['id_rombel']; ?>"><?= $dr['jurusan']; ?>, semester <?= $dr['semester']; ?></option>
+                  <?php endif ?>
+                <?php else: ?>
+                  <option value="<?= $dr['id_rombel']; ?>"><?= $dr['jurusan']; ?>, semester <?= $dr['semester']; ?></option>
+                <?php endif ?>
               <?php endforeach ?>
             </select>
             <div class="invalid-feedback">

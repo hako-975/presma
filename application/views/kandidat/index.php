@@ -53,11 +53,12 @@ if (isset($behavior))
               <tr>
                 <th class="text-center">No.</th>
                 <th class="text-center">Foto</th>
-                <th class="text-center">No. Urut</th>
                 <th class="text-center">NIM</th>
                 <th class="text-center">Nama</th>
                 <th>Visi</th>
                 <th>Misi</th>
+                <th class="text-center">No. Urut</th>
+                <th class="text-center">Periode</th>
                 <th style="width: 12.5rem">Aksi</th>
               </tr>
             </thead>
@@ -71,11 +72,12 @@ if (isset($behavior))
                       <img class="img-fluid img-w-100" src="<?= base_url('assets/img/img_candidates/') . $dk['foto_kandidat']; ?>" alt="<?= $dk['foto_kandidat']; ?>">
                     </a>
                   </td>
-                  <td class="text-center"><?= $dk['no_urut']; ?></td>
                   <td class="text-center"><?= $dk['nim']; ?></td>
                   <td class="text-center"><?= $dk['nama']; ?></td>
                   <td><?= $dk['visi']; ?></td>
                   <td><?= $dk['misi']; ?></td>
+                  <td class="text-center"><?= $dk['no_urut']; ?></td>
+                  <td class="text-center"><?= $dk['periode']; ?></td>
                   <td class="text-center">
                     <button type="button" data-toggle="modal" data-target="#editKandidatModal<?= $dk['id_kandidat']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
 
@@ -91,7 +93,81 @@ if (isset($behavior))
                               </button>
                             </div>
                             <div class="modal-body">
-
+                              <div class="form-group">
+                                <label for="nim<?= $dk['id_kandidat']; ?>" class="font-weight-normal">NIM</label>
+                                <input type="number" id="nim<?= $dk['id_kandidat']; ?>" class="form-control <?= (form_error('nim')) ? 'is-invalid' : ''; ?>" name="nim" required value="<?= (form_error('nim') ? set_value('nim') : $dk['nim']); ?>">
+                                <div class="invalid-feedback">
+                                  <?= form_error('nim'); ?>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="nama<?= $dk['id_kandidat']; ?>" class="font-weight-normal">Nama</label>
+                                <input type="text" id="nama<?= $dk['id_kandidat']; ?>" class="form-control <?= (form_error('nama')) ? 'is-invalid' : ''; ?>" name="nama" required value="<?= (form_error('nama') ? set_value('nama') : $dk['nama']); ?>">
+                                <div class="invalid-feedback">
+                                  <?= form_error('nama'); ?>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="visi<?= $dk['id_kandidat']; ?>" class="font-weight-normal">Visi</label>
+                                <textarea id="visi<?= $dk['id_kandidat']; ?>" class="form-control <?= (form_error('visi')) ? 'is-invalid' : ''; ?>" name="visi" required><?= (form_error('visi') ? set_value('visi') : $dk['visi']); ?></textarea>
+                                <div class="invalid-feedback">
+                                  <?= form_error('visi'); ?>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="misi<?= $dk['id_kandidat']; ?>" class="font-weight-normal">Misi</label>
+                                <textarea id="misi<?= $dk['id_kandidat']; ?>" class="form-control <?= (form_error('misi')) ? 'is-invalid' : ''; ?>" name="misi" required><?= (form_error('misi') ? set_value('misi') : $dk['misi']); ?></textarea>
+                                <div class="invalid-feedback">
+                                  <?= form_error('misi'); ?>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-lg-4 text-center">
+                                    <a href="<?= base_url('assets/img/img_candidates/') . $dk['foto_kandidat']; ?>" class="enlarge check_enlarge_photo">
+                                      <img class="img-fluid rounded check_photo" src="<?= base_url('assets/img/img_candidates/') . $dk['foto_kandidat']; ?>" alt="foto kandidat">
+                                    </a>
+                                    <small class="d-block">Klik foto untuk perbesar</small>
+                                  </div>
+                                  <div class="col-lg">
+                                    <div class="input-group mb-3">
+                                      <div class="custom-file">
+                                        <input type="file" class="custom-file-input photo" id="foto_kandidat<?= $dk['id_kandidat']; ?>" name="foto_kandidat">
+                                        <label class="custom-file-label" for="foto_kandidat<?= $dk['id_kandidat']; ?>">Pilih File</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="no_urut<?= $dk['id_kandidat']; ?>" class="font-weight-normal">No. Urut</label>
+                                <input type="number" id="no_urut<?= $dk['id_kandidat']; ?>" class="form-control <?= (form_error('no_urut')) ? 'is-invalid' : ''; ?>" name="no_urut" required value="<?= (form_error('no_urut') ? set_value('no_urut') : $dk['no_urut']); ?>">
+                                <div class="invalid-feedback">
+                                  <?= form_error('no_urut'); ?>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="id_periode" class="font-weight-normal">Periode</label>
+                                <select id="id_periode" class="custom-select <?= (form_error('id_periode')) ? 'is-invalid' : ''; ?>" name="id_periode" required>
+                                  <?php if (set_value('id_periode') != null): ?>
+                                    <?php 
+                                      $id_periode_old = set_value('id_periode');
+                                      $periode_old = $this->db->get_where('periode', ['id_periode' => $id_periode_old])->row_array();
+                                    ?>
+                                    <option value="<?= set_value('id_periode'); ?>"><?= $periode_old['periode']; ?></option>
+                                  <?php else: ?>
+                                    <option value="<?= $dk['id_periode']; ?>"><?= $dk['periode']; ?></option>
+                                  <?php endif ?>
+                                  <?php foreach ($periode as $dp): ?>
+                                    <?php if ($dk['id_periode'] != $dp['id_periode']): ?>
+                                      <option value="<?= $dp['id_periode']; ?>"><?= $dp['periode']; ?></option>
+                                    <?php endif ?>
+                                  <?php endforeach ?>
+                                </select>
+                                <div class="invalid-feedback">
+                                  <?= form_error('id_periode'); ?>
+                                </div>
+                              </div>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
@@ -101,8 +177,6 @@ if (isset($behavior))
                         </form>
                       </div>
                     </div>
-
-
                     <a href="<?= base_url('kandidat/removeKandidat/' . $dk['id_kandidat']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dk['nama']; ?> dengan NIM <?= $dk['nim']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                   </td>
                 </tr>
@@ -166,16 +240,16 @@ if (isset($behavior))
           <div class="form-group">
             <div class="row">
               <div class="col-lg-4 text-center">
-                <a href="<?= base_url('assets/img/img_candidates/default.png'); ?>" class="enlarge" id="check_enlarge_photo">
-                  <img class="img-fluid rounded" id="check_photo" src="<?= base_url('assets/img/img_candidates/default.png'); ?>" alt="foto kandidat">
+                <a href="<?= base_url('assets/img/img_candidates/default.png'); ?>" class="enlarge check_enlarge_photo">
+                  <img class="img-fluid rounded check_photo" src="<?= base_url('assets/img/img_candidates/default.png'); ?>" alt="foto kandidat">
                 </a>
                 <small class="d-block">Klik foto untuk perbesar</small>
               </div>
-              <div class="col-lg">
+              <div class="col-lg my-auto">
                 <div class="input-group mb-3">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="photo" name="foto_kandidat">
-                    <label class="custom-file-label" for="photo">Choose file</label>
+                    <input type="file" class="custom-file-input photo" id="foto_kandidat" name="foto_kandidat">
+                    <label class="custom-file-label" for="foto_kandidat">Pilih File</label>
                   </div>
                 </div>
               </div>
@@ -186,6 +260,30 @@ if (isset($behavior))
             <input type="number" id="no_urut" class="form-control <?= (form_error('no_urut')) ? 'is-invalid' : ''; ?>" name="no_urut" required value="<?= set_value('no_urut'); ?>">
             <div class="invalid-feedback">
               <?= form_error('no_urut'); ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="id_periode" class="font-weight-normal">Periode</label>
+            <select id="id_periode" class="custom-select <?= (form_error('id_periode')) ? 'is-invalid' : ''; ?>" name="id_periode" required>
+              <?php if (set_value('id_periode') != null): ?>
+                <?php 
+                  $id_periode_old = set_value('id_periode');
+                  $periode_old = $this->db->get_where('periode', ['id_periode' => $id_periode_old])->row_array();
+                ?>
+                <option value="<?= set_value('id_periode'); ?>"><?= $periode_old['periode']; ?></option>
+              <?php endif ?>
+              <?php foreach ($periode as $dp): ?>
+                <?php if (set_value('id_periode') != null): ?>
+                  <?php if ($id_periode_old != $dp['id_periode']): ?>
+                    <option value="<?= $dp['id_periode']; ?>"><?= $dp['periode']; ?></option>
+                  <?php endif ?>
+                <?php else: ?>
+                  <option value="<?= $dp['id_periode']; ?>"><?= $dp['periode']; ?></option>
+                <?php endif ?>
+              <?php endforeach ?>
+            </select>
+            <div class="invalid-feedback">
+              <?= form_error('id_periode'); ?>
             </div>
           </div>
         </div>

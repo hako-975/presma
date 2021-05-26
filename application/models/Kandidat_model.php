@@ -12,12 +12,14 @@ class Kandidat_model extends CI_Model
 
 	public function getKandidat()
 	{
+		$this->db->join('periode', 'kandidat.id_periode = periode.id_periode');
 		$this->db->order_by('no_urut', 'asc');
 		return $this->db->get('kandidat')->result_array();
 	}
 
 	public function getKandidatById($id)
 	{
+		$this->db->join('periode', 'kandidat.id_periode = periode.id_periode');
 		return $this->db->get_where('kandidat', ['id_kandidat' => $id])->row_array();
 	}
 
@@ -41,13 +43,18 @@ class Kandidat_model extends CI_Model
 				echo $this->upload->display_errors();
 			}
 		}
+		else
+		{
+			$this->db->set('foto_kandidat', 'default.png');
+		}
 
 		$data = [
 			'nim' => $this->input->post('nim', true),
 			'nama' => ucwords(strtolower($this->input->post('nama', true))),
 			'visi' => $this->input->post('visi', true),
 			'misi' => $this->input->post('misi', true),
-			'no_urut' => $this->input->post('no_urut', true)
+			'no_urut' => $this->input->post('no_urut', true),
+			'id_periode' => $this->input->post('id_periode', true)
 		];
 
 		$this->db->insert('kandidat', $data);
@@ -67,6 +74,7 @@ class Kandidat_model extends CI_Model
 		$no_urut_old = $kandidat['no_urut'];
 
 		$nim_new = $this->input->post('nim', true);
+		$no_urut_new = $this->input->post('no_urut', true);
 
 		// cek nim sudah tersedia atau belum
 		if ($nim_old != $nim_new)
@@ -76,6 +84,23 @@ class Kandidat_model extends CI_Model
 			if ($checkNim) 
 			{
 				$isi = 'nim ' . $nim_new . ' sudah tersedia';
+				$this->session->set_flashdata('message-failed', $isi);
+
+				$id_user = $this->admo->getDataUserAdmin()['id_user'];
+				$this->lomo->addLog($isi, $id_user);
+				redirect('kandidat');
+				exit;
+			}
+		}
+
+		// cek no urut sudah tersedia atau belum
+		if ($no_urut_old != $no_urut_new)
+		{
+			$checkNoUrut = $this->db->get_where('kandidat', ['no_urut' => $no_urut_new])->row_array();
+			
+			if ($checkNoUrut) 
+			{
+				$isi = 'No. Urut ' . $no_urut_new . ' sudah tersedia';
 				$this->session->set_flashdata('message-failed', $isi);
 
 				$id_user = $this->admo->getDataUserAdmin()['id_user'];
@@ -114,11 +139,12 @@ class Kandidat_model extends CI_Model
 			'nama' => ucwords(strtolower($this->input->post('nama', true))),
 			'visi' => $this->input->post('visi', true),
 			'misi' => $this->input->post('misi', true),
-			'no_urut' => $this->input->post('no_urut', true)
+			'no_urut' => $no_urut_new,
+			'id_periode' => $this->input->post('id_periode', true)
 		];
 
 		$this->db->update('kandidat', $data, ['id_kandidat' => $id]);
-		$isi = 'Kandidat ' . $nim_old . ', Nama: ' . $nama_old . ', No. Urut: ' . $no_urut . ' berhasil diubah menjadi ' . $nim_new . ', Nama: ' . $data['nama'] . ', No. Urut: ' . $data['no_urut'];
+		$isi = 'Kandidat ' . $nim_old . ', Nama: ' . $nama_old . ', No. Urut: ' . $no_urut . ' berhasil diubah menjadi ' . $nim_new . ', Nama: ' . $data['nama'] . ', No. Urut: ' . $no_urut_new;
 		$this->session->set_flashdata('message-success', $isi);
 		
 		$id_user = $this->admo->getDataUserAdmin()['id_user'];
