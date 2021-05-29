@@ -8,6 +8,7 @@ class Periode_model extends CI_Model
 		parent::__construct();
 		$this->load->model('Log_model', 'lomo');
 		$this->load->model('Admin_model', 'admo');
+		$this->load->model('Mahasiswa_model', 'mamo');
 	}
 
 	public function getPeriode()
@@ -21,8 +22,15 @@ class Periode_model extends CI_Model
 		return $this->db->get_where('periode', ['id_periode' => $id])->row_array();
 	}
 
+	public function getPeriodeByPeriode($periode)
+	{
+		return $this->db->get_where('periode', ['periode' => $periode])->row_array();
+	}
+
 	public function addPeriode()
 	{
+		$mahasiswa = $this->mamo->getMahasiswa();
+
 		$periode = $this->input->post('dari_tahun', true) . ' - ' . $this->input->post('sampai_tahun', true);
 		
 		// cek periode sudah tersedia atau belum
@@ -43,7 +51,23 @@ class Periode_model extends CI_Model
 			'periode' => $periode
 		];
 
-		$this->db->insert('periode', $data);
+		$sql_periode = $this->db->insert('periode', $data);
+		$id_periode = $this->db->insert_id();
+
+		if ($sql_periode) 
+		{
+			$data = []; 
+			foreach($mahasiswa as $dm) 
+			{
+				$data[] = [
+					'id_mahasiswa' => $dm['id_mahasiswa'],
+					'id_periode' => $id_periode
+				];
+			}
+
+			$this->db->insert_batch('vote', $data);
+		}
+
 		$isi = 'Periode ' . $data['periode'] . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 

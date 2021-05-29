@@ -30,57 +30,128 @@ class Vote_model extends CI_Model
 		return $this->db->get_where('vote', ['id_vote' => $id])->row_array();
 	}
 
-	public function addVote()
+	public function getVoteByPeriodeResult($periode)
 	{
+		$this->db->select('*, mahasiswa.nama AS nama_mahasiswa, kandidat.nama AS nama_kandidat, periode.status AS status_periode');
+		$this->db->join('mahasiswa', 'vote.id_mahasiswa = mahasiswa.id_mahasiswa');
+		$this->db->join('kandidat', 'vote.id_kandidat = kandidat.id_kandidat', 'LEFT');
+		$this->db->join('periode', 'vote.id_periode = periode.id_periode');
+		return $this->db->get_where('vote', ['periode' => $periode])->result_array();
+	}
+
+	public function addVote($url_periode = null)
+	{
+		$id_mahasiswa = $this->input->post('id_mahasiswa', true);
+		$id_periode = $this->input->post('id_periode', true);
+
+		$mahasiswa = $this->mamo->getMahasiswaById($id_mahasiswa);
+		$nama_new = $mahasiswa['nama'];
+		$nim_new = $mahasiswa['nim'];
+
+		$periode = $this->pemo->getPeriodeById($id_periode);
+		$periode_new = $periode['periode'];
+
+		// check mahasiswa and periode
+		$check = $this->db->get_where('vote', ['id_mahasiswa' => $id_mahasiswa, 'id_periode' => $id_periode])->row_array();
+		if ($check) 
+		{
+			$isi = 'Data vote ' . $nim_new . ', ' . $nama_new . ', ' . $periode_new . ' gagal ditambahkan, sudah tersedia';
+			$this->session->set_flashdata('message-failed', $isi);
+
+			if ($url_periode == null) 
+			{
+				redirect('vote');
+			}
+			else
+			{
+				redirect('vote/periode/' . $url_periode);
+			}
+		}
+
 		$data = [
-			'id_mahasiswa' => $this->input->post('id_mahasiswa', true),
-			'id_periode' => $this->input->post('id_periode', true)
+			'id_mahasiswa' => $id_mahasiswa,
+			'id_periode' => $id_periode
 		];
-		
-		$nama_mahasiswa = $this->mamo->getMahasiswaById($data['id_mahasiswa'])['nama'];
 
 		$this->db->insert('vote', $data);
-		$isi = 'Data vote ' . $nama_mahasiswa . ' berhasil ditambahkan';
+		$isi = 'Data vote ' . $nim_new . ', ' . $nama_new . ', ' . $periode_new . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
 		$id_user = $this->admo->getDataUserAdmin()['id_user'];
 		$this->lomo->addLog($isi, $id_user);
-		redirect('vote');
+		if ($url_periode == null) 
+		{
+			redirect('vote');
+		}
+		else
+		{
+			redirect('vote/periode/' . $url_periode);
+		}
 	}
 
-	public function editVote($id)
-	{
-		$vote = $this->getVoteById($id);
+	// public function editVote($id, $url_periode = null)
+	// {
+	// 	$vote = $this->getVoteById($id);
 
-		$data = [
-			'vote' => $this->input->post('vote', true),
-			'tgl_vote' => time(),
-			'id_mahasiswa' => $this->input->post('id_mahasiswa', true),
-			'id_kandidat' => $this->input->post('id_kandidat', true),
-			'id_periode' => $this->input->post('id_periode', true)
-		];
+	// 	$data = [
+	// 		'vote' => $this->input->post('vote', true),
+	// 		'tgl_vote' => time(),
+	// 		'id_mahasiswa' => $this->input->post('id_mahasiswa', true),
+	// 		'id_kandidat' => $this->input->post('id_kandidat', true),
+	// 		'id_periode' => $this->input->post('id_periode', true)
+	// 	];
 
-		$nama_mahasiswa = $this->mamo->getMahasiswaById($data['id_mahasiswa'])['nama'];
+	// 	$mahasiswa = $this->mamo->getMahasiswaById($data['id_mahasiswa']);
+	// 	$nama_new = $mahasiswa['nama'];
+	// 	$nim_new = $mahasiswa['nim'];
 
-		$this->db->update('vote', $data, ['id_vote' => $id]);
-		$isi = 'Data vote ' . $vote['nama_mahasiswa'] . ' berhasil diubah menjadi ' . $nama_mahasiswa;
-		$this->session->set_flashdata('message-success', $isi);
+	// 	$periode = $this->pemo->getPeriodeById($data['id_periode']);
+	// 	$periode_new = $periode['periode'];
+
+	// 	$this->db->update('vote', $data, ['id_vote' => $id]);
+	// 	$isi = 'Data vote ' . $nim_new . ', ' . $nama_new . ', ' . $periode_new . ' berhasil diubah';
+	// 	$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
-		$this->lomo->addLog($isi, $id_user);
-		redirect('vote');
-	}
+	// 	$id_user = $this->admo->getDataUserAdmin()['id_user'];
+	// 	$this->lomo->addLog($isi, $id_user);
+		
+	// 	if ($url_periode == null) 
+	// 	{
+	// 		redirect('vote');
+	// 	}
+	// 	else
+	// 	{
+	// 		redirect('vote/periode/' . $url_periode);
+	// 	}
+	// }
 
-	public function removeVote($id)
+	public function removeVote($id, $url_periode = null)
 	{
 		$vote = $this->getVoteById($id);
-		$nama_mahasiswa = $vote['nama_mahasiswa'];
+		$id_mahasiswa = $vote['id_mahasiswa'];
+		$id_periode = $vote['id_periode'];
+
+		$mahasiswa = $this->mamo->getMahasiswaById($id_mahasiswa);
+		$nama_old = $mahasiswa['nama'];
+		$nim_old = $mahasiswa['nim'];
+
+		$periode = $this->pemo->getPeriodeById($id_periode);
+		$periode_old = $periode['periode'];
+
 		$this->db->delete('vote', ['id_vote' => $id]);
-		$isi = 'Data vote ' . $nama_mahasiswa . ' berhasil dihapus';
+		$isi = 'Data vote ' . $nim_old . ', ' . $nama_old . ', ' . $periode_old . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
 		$id_user = $this->admo->getDataUserAdmin()['id_user'];
 		$this->lomo->addLog($isi, $id_user);
-		redirect('vote');
+
+		if ($url_periode == null) 
+		{
+			redirect('vote');
+		}
+		else
+		{
+			redirect('vote/periode/' . $url_periode);
+		}
 	}
 }

@@ -68,18 +68,38 @@
             <p>Kandidat</p>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item has-treeview">
           <a href="<?= base_url('vote'); ?>" class="nav-link">
             <i class="fas fa-vote-yea nav-icon"></i>
-            <p>Vote</p>
+            <p>Vote <i class="right fas fa-angle-left"></i></p>
           </a>
+          <ul class="nav nav-treeview">
+            <?php 
+              $this->db->order_by('periode', 'asc');
+              $periode = $this->db->get('periode')->result_array();
+            ?>
+            <?php foreach ($periode as $dp): ?>
+              <li class="nav-item">
+                <a href="<?= base_url('vote/periode/') . $dp['periode']; ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p><?= $dp['periode']; ?></p>
+                </a>
+              </li>
+            <?php endforeach ?>
+            <li class="nav-item">
+              <a href="<?= base_url('periode/setFlashData/addPeriodeModal'); ?>" class="nav-link">
+                <i class="fas fa-plus nav-icon"></i>
+                <p>Tambah Periode</p>
+              </a>
+            </li>
+          </ul>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="fas fa-file nav-icon"></i>
             <p>Laporan</p>
           </a>
-        </li>
+        </li> -->
         <div class="dropdown-divider"></div>
         <li class="nav-item">
           <a href="<?= base_url('log'); ?>" class="nav-link">

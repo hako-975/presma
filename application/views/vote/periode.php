@@ -17,7 +17,7 @@ if (isset($behavior))
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-vote-yea"></i> Vote</h1>
+        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-vote-yea"></i> Vote <?= $row_periode['periode']; ?></h1>
       </div>
       <div class="col header-button">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVoteModal"><i class="fas fa-fw fa-plus"></i> Tambah Vote</button>
@@ -52,61 +52,42 @@ if (isset($behavior))
             <thead class="thead-dark">
               <tr>
                 <th>No.</th>
-                <th>Periode</th>
+                <?php if ($row_periode['status'] == 'sudah selesai'): ?>
                 <th>Tanggal Vote</th>
+                <?php endif ?>
                 <th>Mahasiswa</th>
-                <th>Kandidat</th>
+                <?php if ($row_periode['status'] == 'sudah selesai'): ?>
+                  <th>Kandidat</th>
+                <?php endif ?>
                 <th>Vote</th>
                 <th style="width: 12.5rem">Aksi</th>
               </tr>
             </thead>
             <tbody>
               <?php $i = 1; ?>
-              <?php foreach ($vote as $dv): ?>
+              <?php foreach ($vote_periode as $dv): ?>
                 <tr>
                   <td><?= $i++; ?></td>
-                  <td><?= $dv['periode']; ?></td>
-                  <?php if ($dv['tgl_vote'] == 0): ?>
-                    <td></td>
-                  <?php else: ?>
-                    <td><?= date("Y-m-d, H:i:s", $dv['tgl_vote']); ?></td>
+                  <?php if ($row_periode['status'] == 'sudah selesai'): ?>
+                    <?php if ($dv['tgl_vote'] == 0): ?>
+                      <td></td>
+                    <?php else: ?>
+                      <td><?= date("Y-m-d, H:i:s", $dv['tgl_vote']); ?></td>
+                    <?php endif ?>
                   <?php endif ?>
                   <td><?= $dv['nama_mahasiswa']; ?></td>
-                  <td><?= $dv['nama_kandidat']; ?></td>
-                  <td><?= ucwords($dv['vote']); ?></td>
+                  <?php if ($row_periode['status'] == 'sudah selesai'): ?>
+                    <td><?= $dv['nama_kandidat']; ?></td>
+                  <?php endif ?>
+                  <td>
+                    <?php if ($dv['vote'] == 'belum'): ?>
+                      <button type="button" class="btn btn-sm btn-danger"><i class="fas fa-fw fa-times"></i> <?= ucwords($dv['vote']); ?></button>
+                    <?php else: ?>
+                      <button type="button" class="btn btn-sm btn-success"><i class="fas fa-fw fa-check"></i> <?= ucwords($dv['vote']); ?></button>
+                    <?php endif ?>
+                  </td>
                   <td class="text-center">
-                    <button type="button" data-toggle="modal" data-target="#editVoteModal<?= $dv['id_vote']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
-
-                    <!-- Modal -->
-                    <div class="modal fade text-left" id="editVoteModal<?= $dv['id_vote']; ?>" tabindex="-1" aria-labelledby="editVoteModalLabel<?= $dv['id_vote']; ?>" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <form method="post" action="<?= base_url('vote/editVote/' . $dv['id_vote']); ?>">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="editVoteModalLabel<?= $dv['id_vote']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Vote</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="form-group">
-                                <label for="vote<?= $dv['id_vote']; ?>" class="font-weight-normal">Vote</label>
-                                <input type="text" id="vote<?= $dv['id_vote']; ?>" class="form-control <?= (form_error('vote')) ? 'is-invalid' : ''; ?>" name="vote" required value="<?= (form_error('vote') ? set_value('vote') : $dv['vote']); ?>">
-                                <div class="invalid-feedback">
-                                  <?= form_error('vote'); ?>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
-                              <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-
-                    <a href="<?= base_url('vote/removeVote/' . $dv['id_vote'] . '/null'); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    <a href="<?= base_url('vote/removeVote/' . $dv['id_vote'] . '/' . $row_periode['periode']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                   </td>
                 </tr>
               <?php endforeach ?>
@@ -124,6 +105,7 @@ if (isset($behavior))
 <div class="modal fade" id="addVoteModal"  aria-labelledby="addVoteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form method="post">
+      <input type="hidden" name="id_periode" value="<?= $row_periode['id_periode']; ?>">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addVoteModalLabel"><i class="fas fa-fw fa-plus"></i> Tambah Vote</h5>
@@ -140,30 +122,6 @@ if (isset($behavior))
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="id_periode" class="font-weight-normal">Periode</label>
-            <select id="id_periode" class="custom-select <?= (form_error('id_periode')) ? 'is-invalid' : ''; ?>" name="id_periode" required>
-              <?php if (set_value('id_periode') != null): ?>
-                <?php 
-                  $id_periode_old = set_value('id_periode');
-                  $periode_old = $this->db->get_where('periode', ['id_periode' => $id_periode_old])->row_array();
-                ?>
-                <option value="<?= set_value('id_periode'); ?>"><?= $periode_old['periode']; ?></option>
-              <?php endif ?>
-              <?php foreach ($periode as $dp): ?>
-                <?php if (set_value('id_periode') != null): ?>
-                  <?php if ($id_periode_old != $dp['id_periode']): ?>
-                    <option value="<?= $dp['id_periode']; ?>"><?= $dp['periode']; ?></option>
-                  <?php endif ?>
-                <?php else: ?>
-                  <option value="<?= $dp['id_periode']; ?>"><?= $dp['periode']; ?></option>
-                <?php endif ?>
-              <?php endforeach ?>
-            </select>
-            <div class="invalid-feedback">
-              <?= form_error('id_periode'); ?>
-            </div>
-          </div>
-          <div class="form-group">
             <label for="id_rombel" class="font-weight-normal">Rombel</label>
             <select id="id_rombel" class="custom-select select2 basic-single <?= (form_error('id_rombel')) ? 'is-invalid' : ''; ?>" name="id_rombel" required>
               <option value="0">Pilih Rombel</option>
@@ -173,7 +131,9 @@ if (isset($behavior))
                   $this->db->join('jurusan', 'rombel.id_jurusan = jurusan.id_jurusan');
                   $rombel_old = $this->db->get_where('rombel', ['id_rombel' => $id_rombel_old])->row_array();
                 ?>
-                <option value="<?= set_value('id_rombel'); ?>"><?= $rombel_old['jurusan']; ?>, semester <?= $rombel_old['semester']; ?></option>
+                <?php if ($rombel_old): ?>
+                  <option value="<?= set_value('id_rombel'); ?>"><?= $rombel_old['jurusan']; ?>, semester <?= $rombel_old['semester']; ?></option>
+                <?php endif ?>
               <?php endif ?>
               <?php foreach ($rombel as $dr): ?>
                 <?php if (set_value('id_rombel') != null): ?>
@@ -242,3 +202,4 @@ if (isset($behavior))
     });
   });
 </script>
+
