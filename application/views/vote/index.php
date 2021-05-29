@@ -75,38 +75,7 @@ if (isset($behavior))
                   <td><?= $dv['nama_kandidat']; ?></td>
                   <td><?= ucwords($dv['vote']); ?></td>
                   <td class="text-center">
-                    <button type="button" data-toggle="modal" data-target="#editVoteModal<?= $dv['id_vote']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
-
-                    <!-- Modal -->
-                    <div class="modal fade text-left" id="editVoteModal<?= $dv['id_vote']; ?>" tabindex="-1" aria-labelledby="editVoteModalLabel<?= $dv['id_vote']; ?>" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <form method="post" action="<?= base_url('vote/editVote/' . $dv['id_vote']); ?>">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="editVoteModalLabel<?= $dv['id_vote']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Vote</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="form-group">
-                                <label for="vote<?= $dv['id_vote']; ?>" class="font-weight-normal">Vote</label>
-                                <input type="text" id="vote<?= $dv['id_vote']; ?>" class="form-control <?= (form_error('vote')) ? 'is-invalid' : ''; ?>" name="vote" required value="<?= (form_error('vote') ? set_value('vote') : $dv['vote']); ?>">
-                                <div class="invalid-feedback">
-                                  <?= form_error('vote'); ?>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
-                              <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-
-                    <a href="<?= base_url('vote/removeVote/' . $dv['id_vote'] . '/null'); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    <a href="<?= base_url('vote/removeVote/' . $dv['id_vote']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                   </td>
                 </tr>
               <?php endforeach ?>

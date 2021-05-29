@@ -94,9 +94,13 @@ class Rombel_model extends CI_Model
 
 	public function removeRombel($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
 		$rombel_old = $this->getRombelById($id);
 		$jurusan_old = $rombel_old['jurusan'];
 		$semester_old = $rombel_old['semester'];
+		
+		$this->admo->userPrivilege('rombel', ' (menghapus rombel ' . $jurusan_old . ' semester ' . $semester_old . ')');
+		
 
 		$this->db->delete('rombel', ['id_rombel' => $id]);
 		$isi = 'Rombel '. $jurusan_old . ' semester ' . $semester_old . ' berhasil dihapus';

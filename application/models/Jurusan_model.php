@@ -23,21 +23,27 @@ class Jurusan_model extends CI_Model
 
 	public function addJurusan()
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
+		$jurusan = ucwords(strtolower($this->input->post('jurusan', true)));
+
 		$data = [
-			'jurusan' => ucwords(strtolower($this->input->post('jurusan', true)))
+			'jurusan' => $jurusan
 		];
 
 		$this->db->insert('jurusan', $data);
 		$isi = 'Jurusan ' . $data['jurusan'] . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('jurusan');
 	}
 
 	public function editJurusan($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
 		$jurusan = $this->getJurusanById($id)['jurusan'];
 
 		$data = [
@@ -48,19 +54,24 @@ class Jurusan_model extends CI_Model
 		$isi = 'Jurusan ' . $jurusan . ' berhasil diubah menjadi ' . $data['jurusan'];
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('jurusan');
 	}
 
 	public function removeJurusan($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
 		$jurusan = $this->getJurusanById($id)['jurusan'];
+
+		$this->admo->userPrivilege('jurusan', ' (menghapus jurusan ' . $jurusan . ')');
+
 		$this->db->delete('jurusan', ['id_jurusan' => $id]);
 		$isi = 'Jurusan ' . $jurusan . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('jurusan');
 	}

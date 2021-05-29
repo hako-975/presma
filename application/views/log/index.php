@@ -21,7 +21,7 @@
               <tr>
                 <th>No.</th>
                 <th>Isi Riwayat</th>
-                <th>Tanggal Riwayat</th>
+                <th style="width: 10rem">Tanggal Riwayat</th>
                 <th>User</th>
               </tr>
             </thead>

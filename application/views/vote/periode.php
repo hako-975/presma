@@ -52,11 +52,12 @@ if (isset($behavior))
             <thead class="thead-dark">
               <tr>
                 <th>No.</th>
-                <?php if ($row_periode['status'] == 'sudah selesai'): ?>
+                <?php if ($row_periode['status'] == 'sudah_selesai'): ?>
                 <th>Tanggal Vote</th>
                 <?php endif ?>
+                <th>Rombel</th>
                 <th>Mahasiswa</th>
-                <?php if ($row_periode['status'] == 'sudah selesai'): ?>
+                <?php if ($row_periode['status'] == 'sudah_selesai'): ?>
                   <th>Kandidat</th>
                 <?php endif ?>
                 <th>Vote</th>
@@ -68,15 +69,16 @@ if (isset($behavior))
               <?php foreach ($vote_periode as $dv): ?>
                 <tr>
                   <td><?= $i++; ?></td>
-                  <?php if ($row_periode['status'] == 'sudah selesai'): ?>
+                  <?php if ($row_periode['status'] == 'sudah_selesai'): ?>
                     <?php if ($dv['tgl_vote'] == 0): ?>
                       <td></td>
                     <?php else: ?>
                       <td><?= date("Y-m-d, H:i:s", $dv['tgl_vote']); ?></td>
                     <?php endif ?>
                   <?php endif ?>
+                  <td><?= $dv['jurusan']; ?>, semester <?= $dv['semester']; ?></td>
                   <td><?= $dv['nama_mahasiswa']; ?></td>
-                  <?php if ($row_periode['status'] == 'sudah selesai'): ?>
+                  <?php if ($row_periode['status'] == 'sudah_selesai'): ?>
                     <td><?= $dv['nama_kandidat']; ?></td>
                   <?php endif ?>
                   <td>

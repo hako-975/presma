@@ -15,6 +15,8 @@ class Vote_model extends CI_Model
 	{
 		$this->db->select('*, mahasiswa.nama AS nama_mahasiswa, kandidat.nama AS nama_kandidat');
 		$this->db->join('mahasiswa', 'vote.id_mahasiswa = mahasiswa.id_mahasiswa');
+		$this->db->join('rombel', 'mahasiswa.id_rombel = rombel.id_rombel');
+		$this->db->join('jurusan', 'rombel.id_jurusan = jurusan.id_jurusan');
 		$this->db->join('kandidat', 'vote.id_kandidat = kandidat.id_kandidat', 'LEFT');
 		$this->db->join('periode', 'vote.id_periode = periode.id_periode');
 		$this->db->order_by('tgl_vote', 'asc');
@@ -25,6 +27,8 @@ class Vote_model extends CI_Model
 	{
 		$this->db->select('*, mahasiswa.nama AS nama_mahasiswa, kandidat.nama AS nama_kandidat');
 		$this->db->join('mahasiswa', 'vote.id_mahasiswa = mahasiswa.id_mahasiswa');
+		$this->db->join('rombel', 'mahasiswa.id_rombel = rombel.id_rombel');
+		$this->db->join('jurusan', 'rombel.id_jurusan = jurusan.id_jurusan');
 		$this->db->join('kandidat', 'vote.id_kandidat = kandidat.id_kandidat', 'LEFT');
 		$this->db->join('periode', 'vote.id_periode = periode.id_periode');
 		return $this->db->get_where('vote', ['id_vote' => $id])->row_array();
@@ -34,8 +38,13 @@ class Vote_model extends CI_Model
 	{
 		$this->db->select('*, mahasiswa.nama AS nama_mahasiswa, kandidat.nama AS nama_kandidat, periode.status AS status_periode');
 		$this->db->join('mahasiswa', 'vote.id_mahasiswa = mahasiswa.id_mahasiswa');
+		$this->db->join('rombel', 'mahasiswa.id_rombel = rombel.id_rombel');
+		$this->db->join('jurusan', 'rombel.id_jurusan = jurusan.id_jurusan');
 		$this->db->join('kandidat', 'vote.id_kandidat = kandidat.id_kandidat', 'LEFT');
 		$this->db->join('periode', 'vote.id_periode = periode.id_periode');
+		$this->db->order_by('rombel.semester', 'asc');
+		$this->db->order_by('jurusan.jurusan', 'asc');
+		$this->db->order_by('mahasiswa.nama', 'asc');
 		return $this->db->get_where('vote', ['periode' => $periode])->result_array();
 	}
 
@@ -144,7 +153,7 @@ class Vote_model extends CI_Model
 		
 		$id_user = $this->admo->getDataUserAdmin()['id_user'];
 		$this->lomo->addLog($isi, $id_user);
-
+		
 		if ($url_periode == null) 
 		{
 			redirect('vote');

@@ -29,6 +29,8 @@ class Periode_model extends CI_Model
 
 	public function addPeriode()
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
 		$mahasiswa = $this->mamo->getMahasiswa();
 
 		$periode = $this->input->post('dari_tahun', true) . ' - ' . $this->input->post('sampai_tahun', true);
@@ -41,7 +43,7 @@ class Periode_model extends CI_Model
 			$isi = 'Periode ' . $periode . ' sudah tersedia';
 			$this->session->set_flashdata('message-failed', $isi);
 
-			$id_user = $this->admo->getDataUserAdmin()['id_user'];
+			$id_user = $dataUser['id_user'];
 			$this->lomo->addLog($isi, $id_user);
 			redirect('periode');
 			exit;
@@ -68,16 +70,18 @@ class Periode_model extends CI_Model
 			$this->db->insert_batch('vote', $data);
 		}
 
-		$isi = 'Periode ' . $data['periode'] . ' berhasil ditambahkan';
+		$isi = 'Periode ' . $periode . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('periode');
 	}
 
 	public function editPeriode($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
 		$periode_old = $this->getPeriodeById($id)['periode'];
 
 		$periode_new = $this->input->post('dari_tahun', true) . ' - ' . $this->input->post('sampai_tahun', true);
@@ -92,7 +96,7 @@ class Periode_model extends CI_Model
 				$isi = 'Periode ' . $periode_new . ' sudah tersedia';
 				$this->session->set_flashdata('message-failed', $isi);
 
-				$id_user = $this->admo->getDataUserAdmin()['id_user'];
+				$id_user = $dataUser['id_user'];
 				$this->lomo->addLog($isi, $id_user);
 				redirect('periode');
 				exit;
@@ -112,19 +116,23 @@ class Periode_model extends CI_Model
 		$isi = 'Periode ' . $periode_old . ' berhasil diubah menjadi ' . $periode_new . ' dengan status ' . $status;
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('periode');
 	}
 
 	public function removePeriode($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
 		$periode = $this->getPeriodeById($id)['periode'];
+		$this->admo->userPrivilege('periode', ' (menghapus periode ' . $periode . ')');
+
 		$this->db->delete('periode', ['id_periode' => $id]);
 		$isi = 'Periode ' . $periode . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('periode');
 	}

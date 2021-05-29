@@ -147,9 +147,9 @@ if (isset($behavior))
                         </form>
                       </div>
                     </div>
-
-
-                    <a href="<?= base_url('periode/removePeriode/' . $dp['id_periode']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dp['periode']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    <?php if ($dataUser['role'] == 'Administrator'): ?>
+                      <a href="<?= base_url('periode/removePeriode/' . $dp['id_periode']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dp['periode']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    <?php endif ?>
                   </td>
                 </tr>
               <?php endforeach ?>

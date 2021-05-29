@@ -94,8 +94,9 @@ if (isset($behavior))
                       </div>
                     </div>
 
-
-                    <a href="<?= base_url('jurusan/removeJurusan/' . $dj['id_jurusan']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dj['jurusan']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    <?php if ($dataUser['role'] == 'Administrator'): ?>
+                      <a href="<?= base_url('jurusan/removeJurusan/' . $dj['id_jurusan']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dj['jurusan']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    <?php endif ?>
                   </td>
                 </tr>
               <?php endforeach ?>

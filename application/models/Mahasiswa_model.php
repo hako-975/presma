@@ -29,6 +29,8 @@ class Mahasiswa_model extends CI_Model
 
 	public function addMahasiswa()
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
 		$data = [
 			'nim' => $this->input->post('nim', true),
 			'nama' => ucwords(strtolower($this->input->post('nama', true))),
@@ -43,13 +45,15 @@ class Mahasiswa_model extends CI_Model
 		$isi = 'Mahasiswa ' . $data['nim'] . ', ' . $data['nama'] . ', ' . $data['tgl_lahir'] . ', ' . $rombel_new . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('mahasiswa');
 	}
 
 	public function editMahasiswa($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
 		$mahasiswa = $this->getMahasiswaById($id);
 		$nim_old = $mahasiswa['nim'];
 		$nama_old = $mahasiswa['nama'];
@@ -70,7 +74,7 @@ class Mahasiswa_model extends CI_Model
 				$isi = 'nim ' . $nim_new . ' sudah tersedia';
 				$this->session->set_flashdata('message-failed', $isi);
 
-				$id_user = $this->admo->getDataUserAdmin()['id_user'];
+				$id_user = $dataUser['id_user'];
 				$this->lomo->addLog($isi, $id_user);
 				redirect('mahasiswa');
 				exit;
@@ -92,13 +96,15 @@ class Mahasiswa_model extends CI_Model
 		$isi = 'Mahasiswa ' . $nim_old . ', ' . $nama_old . ', ' . $tgl_lahir_old . ', ' . $rombel_old . ' berhasil diubah menjadi ' . $nim_new . ', ' . $nama_new . ', ' . $tgl_lahir_new . ', ' . $rombel_new;
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('mahasiswa');
 	}
 
 	public function removeMahasiswa($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
 		$mahasiswa = $this->getMahasiswaById($id);
 		$nama = $mahasiswa['nama'];
 		$nim = $mahasiswa['nim'];
@@ -110,7 +116,7 @@ class Mahasiswa_model extends CI_Model
 		$isi = 'Mahasiswa ' . $nim . ', ' . $nama . ', ' . $tgl_lahir . ', ' . $rombel . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('mahasiswa');
 	}

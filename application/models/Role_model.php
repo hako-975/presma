@@ -23,29 +23,38 @@ class Role_model extends CI_Model
 
 	public function addRole()
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		$role = ucwords(strtolower($this->input->post('role', true)));
+
+		$this->admo->userPrivilege('role', ' (menambahkan Jabatan ' . $role . ')');
+
 		$data = [
-			'role' => ucwords(strtolower($this->input->post('role', true)))
+			'role' => $role
 		];
 
 		$this->db->insert('role', $data);
-		$isi = 'Jabatan ' . $data['role'] . ' berhasil ditambahkan';
+		$isi = 'Jabatan ' . $role . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('role');
 	}
 
 	public function editRole($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
 		$role = $this->getRoleById($id)['role'];
 		
+		$this->admo->userPrivilege('role', ' (mengubah Jabatan ' . $role . ')');
+
 		if ($role == 'Administrator')
 		{
 			$isi = 'Akses ditolak! Jabatan ' . $role . ' tidak boleh diubah';
 			$this->session->set_flashdata('message-failed', $isi);
 			
-			$id_user = $this->admo->getDataUserAdmin()['id_user'];
+			$id_user = $dataUser['id_user'];
 			$this->lomo->addLog($isi, $id_user);
 			redirect('role');
 			exit();
@@ -59,21 +68,25 @@ class Role_model extends CI_Model
 		$isi = 'Jabatan ' . $role . ' berhasil diubah menjadi ' . $data['role'];
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('role');
 	}
 
 	public function removeRole($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
 		$role = $this->getRoleById($id)['role'];
+
+		$this->admo->userPrivilege('role', ' (menghapus Jabatan ' . $role . ')');
 		
 		if ($role == 'Administrator')
 		{
 			$isi = 'Akses ditolak! Jabatan ' . $role . ' tidak boleh dihapus';
 			$this->session->set_flashdata('message-failed', $isi);
 			
-			$id_user = $this->admo->getDataUserAdmin()['id_user'];
+			$id_user = $dataUser['id_user'];
 			$this->lomo->addLog($isi, $id_user);
 			redirect('role');
 			exit();
@@ -83,7 +96,7 @@ class Role_model extends CI_Model
 		$isi = 'Jabatan ' . $role . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('role');
 	}

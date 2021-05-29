@@ -120,8 +120,9 @@ if (isset($behavior))
                         </form>
                       </div>
                     </div>
-
-                    <a href="<?= base_url('rombel/removeRombel/' . $dr['id_rombel']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dr['jurusan']; ?> semester <?= $dr['semester']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    <?php if ($dataUser['role'] == 'Administrator'): ?>
+                      <a href="<?= base_url('rombel/removeRombel/' . $dr['id_rombel']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dr['jurusan']; ?> semester <?= $dr['semester']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    <?php endif ?>
                   </td>
                 </tr>
               <?php endforeach ?>

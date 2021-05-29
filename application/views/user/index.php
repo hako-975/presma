@@ -19,9 +19,11 @@ if (isset($behavior))
       <div class="col header-title">
         <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user"></i> Pengguna</h1>
       </div>
-      <div class="col header-button">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal"><i class="fas fa-fw fa-plus"></i> Tambah Pengguna</button>
-      </div>
+      <?php if ($dataUser['role'] == 'Administrator'): ?>
+        <div class="col header-button">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal"><i class="fas fa-fw fa-plus"></i> Tambah Pengguna</button>
+        </div>
+      <?php endif ?>
     </div>
   </div>
 </div>
@@ -54,7 +56,9 @@ if (isset($behavior))
                 <th>No.</th>
                 <th>Username</th>
                 <th>Jabatan</th>
-                <th style="width: 12.5rem">Aksi</th>
+                <?php if ($dataUser['role'] == 'Administrator'): ?>
+                  <th style="width: 12.5rem">Aksi</th>
+                <?php endif ?>
               </tr>
             </thead>
             <tbody>
@@ -64,66 +68,68 @@ if (isset($behavior))
                   <td><?= $i++; ?></td>
                   <td><?= $du['username']; ?></td>
                   <td><?= $du['role']; ?></td>
-                  <td class="text-center">
-                    <?php if ($du['role'] != 'Administrator'): ?>
-                      <button type="button" data-toggle="modal" data-target="#editUserModal<?= $du['id_user']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
+                  <?php if ($dataUser['role'] == 'Administrator'): ?>
+                    <td class="text-center">
+                      <?php if ($du['role'] != 'Administrator'): ?>
+                        <button type="button" data-toggle="modal" data-target="#editUserModal<?= $du['id_user']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
 
-                      <!-- Modal -->
-                      <div class="modal fade text-left" id="editUserModal<?= $du['id_user']; ?>" tabindex="-1" aria-labelledby="editUserModalLabel<?= $du['id_user']; ?>" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <form method="post" action="<?= base_url('user/editUser/' . $du['id_user']); ?>">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="editUserModalLabel<?= $du['id_user']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Pengguna</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <div class="form-group">
-                                  <label for="username<?= $du['id_user']; ?>" class="font-weight-normal">Username</label>
-                                  <input type="text" id="username<?= $du['id_user']; ?>" class="form-control <?= (form_error('username')) ? 'is-invalid' : ''; ?>" name="username" required value="<?= (form_error('username') ? set_value('username') : $du['username']); ?>">
-                                  <div class="invalid-feedback">
-                                    <?= form_error('username'); ?>
-                                  </div>
+                        <!-- Modal -->
+                        <div class="modal fade text-left" id="editUserModal<?= $du['id_user']; ?>" tabindex="-1" aria-labelledby="editUserModalLabel<?= $du['id_user']; ?>" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <form method="post" action="<?= base_url('user/editUser/' . $du['id_user']); ?>">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="editUserModalLabel<?= $du['id_user']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Pengguna</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
                                 </div>
-                                <div class="form-group">
-                                  <label for="id_role<?= $du['id_user']; ?>" class="font-weight-normal">Jabatan</label>
-                                  <select id="id_role<?= $du['id_user']; ?>" class="custom-select <?= (form_error('id_role')) ? 'is-invalid' : ''; ?>" name="id_role" required>
-                                    <?php if (set_value('id_role') != null): ?>
-                                      <?php 
-                                        $id_role_old = set_value('id_role');
-                                        $role_old = $this->db->get_where('role', ['id_role' => $id_role_old])->row_array();
-                                      ?>
-                                      <option value="<?= set_value('id_role'); ?>"><?= $role_old['role']; ?></option>
-                                    <?php else: ?>
-                                      <option value="<?= $du['id_role']; ?>"><?= $du['role']; ?></option>
-                                    <?php endif ?>
-                                    <?php foreach ($role as $dr): ?>
-                                      <?php if ($dr['role'] != 'Administrator'): ?>
-                                        <?php if ($du['id_role'] != $dr['id_role']): ?>
-                                          <option value="<?= $dr['id_role']; ?>"><?= $dr['role']; ?></option>
-                                        <?php endif ?>
+                                <div class="modal-body">
+                                  <div class="form-group">
+                                    <label for="username<?= $du['id_user']; ?>" class="font-weight-normal">Username</label>
+                                    <input type="text" id="username<?= $du['id_user']; ?>" class="form-control <?= (form_error('username')) ? 'is-invalid' : ''; ?>" name="username" required value="<?= (form_error('username') ? set_value('username') : $du['username']); ?>">
+                                    <div class="invalid-feedback">
+                                      <?= form_error('username'); ?>
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="id_role<?= $du['id_user']; ?>" class="font-weight-normal">Jabatan</label>
+                                    <select id="id_role<?= $du['id_user']; ?>" class="custom-select <?= (form_error('id_role')) ? 'is-invalid' : ''; ?>" name="id_role" required>
+                                      <?php if (set_value('id_role') != null): ?>
+                                        <?php 
+                                          $id_role_old = set_value('id_role');
+                                          $role_old = $this->db->get_where('role', ['id_role' => $id_role_old])->row_array();
+                                        ?>
+                                        <option value="<?= set_value('id_role'); ?>"><?= $role_old['role']; ?></option>
+                                      <?php else: ?>
+                                        <option value="<?= $du['id_role']; ?>"><?= $du['role']; ?></option>
                                       <?php endif ?>
-                                    <?php endforeach ?>
-                                  </select>
-                                  <div class="invalid-feedback">
-                                    <?= form_error('id_role'); ?>
+                                      <?php foreach ($role as $dr): ?>
+                                        <?php if ($dr['role'] != 'Administrator'): ?>
+                                          <?php if ($du['id_role'] != $dr['id_role']): ?>
+                                            <option value="<?= $dr['id_role']; ?>"><?= $dr['role']; ?></option>
+                                          <?php endif ?>
+                                        <?php endif ?>
+                                      <?php endforeach ?>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                      <?= form_error('id_role'); ?>
+                                    </div>
                                   </div>
                                 </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
+                                  <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
+                                </div>
                               </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
-                              </div>
-                            </div>
-                          </form>
+                            </form>
+                          </div>
                         </div>
-                      </div>
 
-                      <a href="<?= base_url('user/removeUser/' . $du['id_user']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $du['username']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
-                    <?php endif ?>
-                  </td>
+                        <a href="<?= base_url('user/removeUser/' . $du['id_user']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $du['username']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                      <?php endif ?>
+                    </td>
+                  <?php endif ?>
                 </tr>
               <?php endforeach ?>
             </tbody>

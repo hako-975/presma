@@ -26,8 +26,14 @@ class User_model extends CI_Model
 
 	public function addUser()
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
+		$username = $this->input->post('username', true);
+
+		$this->admo->userPrivilege('user', ' (menambahkan user ' . $username . ')');
+		
 		$data = [
-			'username' => $this->input->post('username', true),
+			'username' => $username,
 			'password' => password_hash($this->input->post('password', true), PASSWORD_DEFAULT),
 			'id_role' => $this->input->post('id_role', true)
 		];
@@ -38,23 +44,27 @@ class User_model extends CI_Model
 		$isi = 'User ' . $data['username'] . ' dengan jabatan ' . $role . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('user');
 	}
 
 	public function editUser($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
 		$user = $this->getUserById($id);
 		$username = $user['username'];
 		$role = $user['role'];
+
+		$this->admo->userPrivilege('user', ' (mengubah user ' . $username . ')');
 
 		if ($role == 'Administrator')
 		{
 			$isi = 'Akses ditolak! Role ' . $role . ' tidak boleh diubah';
 			$this->session->set_flashdata('message-failed', $isi);
 			
-			$id_user = $this->admo->getDataUserAdmin()['id_user'];
+			$id_user = $dataUser['id_user'];
 			$this->lomo->addLog($isi, $id_user);
 			redirect('user');
 			exit();
@@ -72,33 +82,37 @@ class User_model extends CI_Model
 		$isi = 'User ' . $username . ' berhasil diubah menjadi ' . $data['username'] . ' dan jabatan ' . $role . ' menjadi ' . $new_role;
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('user');
 	}
 
 	public function removeUser($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
 		$user = $this->getUserById($id);
-		$username = $user['username'];
+		$username_old = $user['username'];
 		$role = $user['role'];
 
+		$this->admo->userPrivilege('user', ' (menghapus user ' . $username_old . ')');
+		
 		if ($role == 'Administrator')
 		{
 			$isi = 'Akses ditolak! Role ' . $role . ' tidak boleh dihapus';
 			$this->session->set_flashdata('message-failed', $isi);
 			
-			$id_user = $this->admo->getDataUserAdmin()['id_user'];
+			$id_user = $dataUser['id_user'];
 			$this->lomo->addLog($isi, $id_user);
 			redirect('user');
 			exit();
 		}
 
 		$this->db->delete('user', ['id_user' => $id]);
-		$isi = 'User ' . $username . ' dengan jabatan ' . $role . ' berhasil dihapus';
+		$isi = 'User ' . $username_old . ' dengan jabatan ' . $role . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('user');
 	}
