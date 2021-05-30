@@ -19,9 +19,11 @@ if (isset($behavior))
       <div class="col header-title">
         <h1 class="m-0 text-dark"><i class="fas fa-fw fa-vote-yea"></i> Vote <?= $row_periode['periode']; ?></h1>
       </div>
-      <div class="col header-button">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVoteModal"><i class="fas fa-fw fa-plus"></i> Tambah Vote</button>
-      </div>
+      <?php if ($dataUser['role'] != 'Tamu'): ?>
+        <div class="col header-button">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVoteModal"><i class="fas fa-fw fa-plus"></i> Tambah Vote</button>
+        </div>
+      <?php endif ?>
     </div>
   </div>
 </div>
@@ -61,7 +63,9 @@ if (isset($behavior))
                   <th>Kandidat</th>
                 <?php endif ?>
                 <th>Vote</th>
-                <th style="width: 12.5rem">Aksi</th>
+                <?php if ($dataUser['role'] != 'Tamu'): ?>
+                  <th style="width: 12.5rem">Aksi</th>
+                <?php endif ?>
               </tr>
             </thead>
             <tbody>
@@ -88,9 +92,11 @@ if (isset($behavior))
                       <button type="button" class="btn btn-sm btn-success"><i class="fas fa-fw fa-check"></i> <?= ucwords($dv['vote']); ?></button>
                     <?php endif ?>
                   </td>
-                  <td class="text-center">
-                    <a href="<?= base_url('vote/removeVote/' . $dv['id_vote'] . '/' . $row_periode['periode']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
-                  </td>
+                  <?php if ($dataUser['role'] != 'Tamu'): ?>
+                    <td class="text-center">
+                      <a href="<?= base_url('vote/removeVote/' . $dv['id_vote'] . '/' . $row_periode['periode']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    </td>
+                  <?php endif ?>
                 </tr>
               <?php endforeach ?>
             </tbody>

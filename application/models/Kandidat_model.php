@@ -25,6 +25,12 @@ class Kandidat_model extends CI_Model
 
 	public function addKandidat()
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
+		$nama = ucwords(strtolower($this->input->post('nama', true)));
+
+		$this->admo->userPrivilegeTamu('kandidat', ' (menambahkan kandidat ' . $nama . ')');
+
 		$foto_kandidat = $_FILES['foto_kandidat']['name'];
 		if ($foto_kandidat) 
 		{
@@ -50,7 +56,7 @@ class Kandidat_model extends CI_Model
 
 		$data = [
 			'nim' => $this->input->post('nim', true),
-			'nama' => ucwords(strtolower($this->input->post('nama', true))),
+			'nama' => $nama,
 			'visi' => $this->input->post('visi', true),
 			'misi' => $this->input->post('misi', true),
 			'no_urut' => $this->input->post('no_urut', true),
@@ -61,17 +67,21 @@ class Kandidat_model extends CI_Model
 		$isi = 'Kandidat ' . $data['nama'] . ' dengan NIM ' . $data['nim'] . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('kandidat');
 	}
 
 	public function editKandidat($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
 		$kandidat = $this->getKandidatById($id);
 		$nim_old = $kandidat['nim'];
 		$nama_old = $kandidat['nama'];
 		$no_urut_old = $kandidat['no_urut'];
+		
+		$this->admo->userPrivilegeTamu('kandidat', ' (mengubah kandidat ' . $nama_old . ')');
 
 		$nim_new = $this->input->post('nim', true);
 		$no_urut_new = $this->input->post('no_urut', true);
@@ -86,7 +96,7 @@ class Kandidat_model extends CI_Model
 				$isi = 'nim ' . $nim_new . ' sudah tersedia';
 				$this->session->set_flashdata('message-failed', $isi);
 
-				$id_user = $this->admo->getDataUserAdmin()['id_user'];
+				$id_user = $dataUser['id_user'];
 				$this->lomo->addLog($isi, $id_user);
 				redirect('kandidat');
 				exit;
@@ -103,7 +113,7 @@ class Kandidat_model extends CI_Model
 				$isi = 'No. Urut ' . $no_urut_new . ' sudah tersedia';
 				$this->session->set_flashdata('message-failed', $isi);
 
-				$id_user = $this->admo->getDataUserAdmin()['id_user'];
+				$id_user = $dataUser['id_user'];
 				$this->lomo->addLog($isi, $id_user);
 				redirect('kandidat');
 				exit;
@@ -147,22 +157,25 @@ class Kandidat_model extends CI_Model
 		$isi = 'Kandidat ' . $nim_old . ', Nama: ' . $nama_old . ', No. Urut: ' . $no_urut . ' berhasil diubah menjadi ' . $nim_new . ', Nama: ' . $data['nama'] . ', No. Urut: ' . $no_urut_new;
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('kandidat');
 	}
 
 	public function removeKandidat($id)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
 		$kandidat = $this->getKandidatById($id);
 		$nama_old = $kandidat['nama'];
 		$nim_old = $kandidat['nim'];
-		
+		$this->admo->userPrivilegeTamu('kandidat', ' (menghapus kandidat ' . $nama_old . ')');
+
 		$this->db->delete('kandidat', ['id_kandidat' => $id]);
 		$isi = 'Kandidat ' . $nim_old . ', ' . $nama_old . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		redirect('kandidat');
 	}

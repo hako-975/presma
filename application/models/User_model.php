@@ -30,7 +30,8 @@ class User_model extends CI_Model
 
 		$username = $this->input->post('username', true);
 
-		$this->admo->userPrivilege('user', ' (menambahkan user ' . $username . ')');
+		$this->admo->userPrivilegeTamu('user', ' (menambahkan user ' . $username . ')');
+		$this->admo->userPrivilegeAdministrator('user', ' (menambahkan user ' . $username . ')');
 		
 		$data = [
 			'username' => $username,
@@ -57,7 +58,8 @@ class User_model extends CI_Model
 		$username = $user['username'];
 		$role = $user['role'];
 
-		$this->admo->userPrivilege('user', ' (mengubah user ' . $username . ')');
+		$this->admo->userPrivilegeTamu('user', ' (mengubah user ' . $username . ')');
+		$this->admo->userPrivilegeAdministrator('user', ' (mengubah user ' . $username . ')');
 
 		if ($role == 'Administrator')
 		{
@@ -95,7 +97,8 @@ class User_model extends CI_Model
 		$username_old = $user['username'];
 		$role = $user['role'];
 
-		$this->admo->userPrivilege('user', ' (menghapus user ' . $username_old . ')');
+		$this->admo->userPrivilegeTamu('user', ' (menghapus user ' . $username_old . ')');
+		$this->admo->userPrivilegeAdministrator('user', ' (menghapus user ' . $username_old . ')');
 		
 		if ($role == 'Administrator')
 		{

@@ -30,10 +30,14 @@ class Mahasiswa_model extends CI_Model
 	public function addMahasiswa()
 	{
 		$dataUser = $this->admo->getDataUserAdmin();
+		
+		$nama = ucwords(strtolower($this->input->post('nama', true)));
+
+		$this->admo->userPrivilegeTamu('mahasiswa', ' (menambahkan mahasiswa ' . $nama . ')');
 
 		$data = [
 			'nim' => $this->input->post('nim', true),
-			'nama' => ucwords(strtolower($this->input->post('nama', true))),
+			'nama' => $nama,
 			'tgl_lahir' => $this->input->post('tgl_lahir', true),
 			'id_rombel' => $this->input->post('id_rombel', true)
 		];
@@ -60,6 +64,8 @@ class Mahasiswa_model extends CI_Model
 		$tgl_lahir_old = $mahasiswa['tgl_lahir'];
 		$id_rombel_old = $mahasiswa['id_rombel'];
 		$rombel_old = $mahasiswa['jurusan'] . ', semester ' . $mahasiswa['semester'];
+
+		$this->admo->userPrivilegeTamu('mahasiswa', ' (mengubah mahasiswa ' . $nama_old . ')');
 
 		$nim_new = $this->input->post('nim', true);
 		$nama_new = ucwords(strtolower($this->input->post('nama', true)));
@@ -111,6 +117,8 @@ class Mahasiswa_model extends CI_Model
 		$tgl_lahir = $mahasiswa['tgl_lahir'];
 		$rombel = $this->romo->getRombelById($mahasiswa['id_rombel']);
 		$rombel = $rombel['jurusan'] . ', semester ' . $rombel['semester'];
+
+		$this->admo->userPrivilegeTamu('mahasiswa', ' (menghapus mahasiswa ' . $nama . ')');
 
 		$this->db->delete('mahasiswa', ['id_mahasiswa' => $id]);
 		$isi = 'Mahasiswa ' . $nim . ', ' . $nama . ', ' . $tgl_lahir . ', ' . $rombel . ' berhasil dihapus';

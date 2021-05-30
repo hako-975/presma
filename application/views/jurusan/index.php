@@ -19,9 +19,11 @@ if (isset($behavior))
       <div class="col header-title">
         <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user-graduate"></i> Jurusan</h1>
       </div>
-      <div class="col header-button">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addJurusanModal"><i class="fas fa-fw fa-plus"></i> Tambah Jurusan</button>
-      </div>
+      <?php if ($dataUser['role'] != 'Tamu'): ?>
+        <div class="col header-button">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addJurusanModal"><i class="fas fa-fw fa-plus"></i> Tambah Jurusan</button>
+        </div>
+      <?php endif ?>
     </div>
   </div>
 </div>
@@ -53,7 +55,9 @@ if (isset($behavior))
               <tr>
                 <th>No.</th>
                 <th>Jurusan</th>
-                <th style="width: 12.5rem">Aksi</th>
+                <?php if ($dataUser['role'] != 'Tamu'): ?>
+                  <th style="width: 12.5rem">Aksi</th>
+                <?php endif ?>
               </tr>
             </thead>
             <tbody>
@@ -62,42 +66,44 @@ if (isset($behavior))
                 <tr>
                   <td><?= $i++; ?></td>
                   <td><?= $dj['jurusan']; ?></td>
-                  <td class="text-center">
-                    <button type="button" data-toggle="modal" data-target="#editJurusanModal<?= $dj['id_jurusan']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
+                  <?php if ($dataUser['role'] != 'Tamu'): ?>
+                    <td class="text-center">
+                      <button type="button" data-toggle="modal" data-target="#editJurusanModal<?= $dj['id_jurusan']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
 
-                    <!-- Modal -->
-                    <div class="modal fade text-left" id="editJurusanModal<?= $dj['id_jurusan']; ?>" tabindex="-1" aria-labelledby="editJurusanModalLabel<?= $dj['id_jurusan']; ?>" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <form method="post" action="<?= base_url('jurusan/editJurusan/' . $dj['id_jurusan']); ?>">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="editJurusanModalLabel<?= $dj['id_jurusan']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Jurusan</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="form-group">
-                                <label for="jurusan<?= $dj['id_jurusan']; ?>" class="font-weight-normal">Jurusan</label>
-                                <input type="text" id="jurusan<?= $dj['id_jurusan']; ?>" class="form-control <?= (form_error('jurusan')) ? 'is-invalid' : ''; ?>" name="jurusan" required value="<?= (form_error('jurusan') ? set_value('jurusan') : $dj['jurusan']); ?>">
-                                <div class="invalid-feedback">
-                                  <?= form_error('jurusan'); ?>
+                      <!-- Modal -->
+                      <div class="modal fade text-left" id="editJurusanModal<?= $dj['id_jurusan']; ?>" tabindex="-1" aria-labelledby="editJurusanModalLabel<?= $dj['id_jurusan']; ?>" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <form method="post" action="<?= base_url('jurusan/editJurusan/' . $dj['id_jurusan']); ?>">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="editJurusanModalLabel<?= $dj['id_jurusan']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Jurusan</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label for="jurusan<?= $dj['id_jurusan']; ?>" class="font-weight-normal">Jurusan</label>
+                                  <input type="text" id="jurusan<?= $dj['id_jurusan']; ?>" class="form-control <?= (form_error('jurusan')) ? 'is-invalid' : ''; ?>" name="jurusan" required value="<?= (form_error('jurusan') ? set_value('jurusan') : $dj['jurusan']); ?>">
+                                  <div class="invalid-feedback">
+                                    <?= form_error('jurusan'); ?>
+                                  </div>
                                 </div>
                               </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
+                              </div>
                             </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
-                              <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
-                            </div>
-                          </div>
-                        </form>
+                          </form>
+                        </div>
                       </div>
-                    </div>
 
-                    <?php if ($dataUser['role'] == 'Administrator'): ?>
-                      <a href="<?= base_url('jurusan/removeJurusan/' . $dj['id_jurusan']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dj['jurusan']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
-                    <?php endif ?>
-                  </td>
+                      <?php if ($dataUser['role'] == 'Administrator'): ?>
+                        <a href="<?= base_url('jurusan/removeJurusan/' . $dj['id_jurusan']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="<?= $dj['jurusan']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                      <?php endif ?>
+                    </td>
+                  <?php endif ?>
                 </tr>
               <?php endforeach ?>
             </tbody>

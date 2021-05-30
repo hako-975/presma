@@ -19,9 +19,11 @@ if (isset($behavior))
       <div class="col header-title">
         <h1 class="m-0 text-dark"><i class="fas fa-fw fa-vote-yea"></i> Vote</h1>
       </div>
-      <div class="col header-button">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVoteModal"><i class="fas fa-fw fa-plus"></i> Tambah Vote</button>
-      </div>
+      <?php if ($dataUser['role'] != 'Tamu'): ?>
+        <div class="col header-button">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVoteModal"><i class="fas fa-fw fa-plus"></i> Tambah Vote</button>
+        </div>
+      <?php endif ?>
     </div>
   </div>
 </div>
@@ -57,7 +59,9 @@ if (isset($behavior))
                 <th>Mahasiswa</th>
                 <th>Kandidat</th>
                 <th>Vote</th>
-                <th style="width: 12.5rem">Aksi</th>
+                <?php if ($dataUser['role'] != 'Tamu'): ?>
+                  <th style="width: 12.5rem">Aksi</th>
+                <?php endif ?>
               </tr>
             </thead>
             <tbody>
@@ -74,9 +78,11 @@ if (isset($behavior))
                   <td><?= $dv['nama_mahasiswa']; ?></td>
                   <td><?= $dv['nama_kandidat']; ?></td>
                   <td><?= ucwords($dv['vote']); ?></td>
-                  <td class="text-center">
-                    <a href="<?= base_url('vote/removeVote/' . $dv['id_vote']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
-                  </td>
+                  <?php if ($dataUser['role'] != 'Tamu'): ?>
+                    <td class="text-center">
+                      <a href="<?= base_url('vote/removeVote/' . $dv['id_vote']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                    </td>
+                  <?php endif ?>
                 </tr>
               <?php endforeach ?>
             </tbody>

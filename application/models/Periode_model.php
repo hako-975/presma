@@ -35,6 +35,8 @@ class Periode_model extends CI_Model
 
 		$periode = $this->input->post('dari_tahun', true) . ' - ' . $this->input->post('sampai_tahun', true);
 		
+		$this->admo->userPrivilegeTamu('periode', ' (menambahkan periode ' . $periode . ')');
+		
 		// cek periode sudah tersedia atau belum
 		$checkPeriode = $this->db->get_where('periode', ['periode' => $periode])->row_array();
 		
@@ -81,8 +83,11 @@ class Periode_model extends CI_Model
 	public function editPeriode($id)
 	{
 		$dataUser = $this->admo->getDataUserAdmin();
-		
+
+
 		$periode_old = $this->getPeriodeById($id)['periode'];
+
+		$this->admo->userPrivilegeTamu('periode', ' (mengubah periode ' . $periode_old . ')');
 
 		$periode_new = $this->input->post('dari_tahun', true) . ' - ' . $this->input->post('sampai_tahun', true);
 		
@@ -126,7 +131,8 @@ class Periode_model extends CI_Model
 		$dataUser = $this->admo->getDataUserAdmin();
 		
 		$periode = $this->getPeriodeById($id)['periode'];
-		$this->admo->userPrivilege('periode', ' (menghapus periode ' . $periode . ')');
+		$this->admo->userPrivilegeTamu('periode', ' (menghapus periode ' . $periode . ')');
+		$this->admo->userPrivilegeAdministrator('periode', ' (menghapus periode ' . $periode . ')');
 
 		$this->db->delete('periode', ['id_periode' => $id]);
 		$isi = 'Periode ' . $periode . ' berhasil dihapus';

@@ -26,7 +26,8 @@ class Role_model extends CI_Model
 		$dataUser = $this->admo->getDataUserAdmin();
 		$role = ucwords(strtolower($this->input->post('role', true)));
 
-		$this->admo->userPrivilege('role', ' (menambahkan Jabatan ' . $role . ')');
+		$this->admo->userPrivilegeTamu('role', ' (menambahkan Jabatan ' . $role . ')');
+		$this->admo->userPrivilegeAdministrator('role', ' (menambahkan Jabatan ' . $role . ')');
 
 		$data = [
 			'role' => $role
@@ -47,7 +48,8 @@ class Role_model extends CI_Model
 		
 		$role = $this->getRoleById($id)['role'];
 		
-		$this->admo->userPrivilege('role', ' (mengubah Jabatan ' . $role . ')');
+		$this->admo->userPrivilegeTamu('role', ' (mengubah Jabatan ' . $role . ')');
+		$this->admo->userPrivilegeAdministrator('role', ' (mengubah Jabatan ' . $role . ')');
 
 		if ($role == 'Administrator')
 		{
@@ -79,7 +81,8 @@ class Role_model extends CI_Model
 
 		$role = $this->getRoleById($id)['role'];
 
-		$this->admo->userPrivilege('role', ' (menghapus Jabatan ' . $role . ')');
+		$this->admo->userPrivilegeTamu('role', ' (menghapus Jabatan ' . $role . ')');
+		$this->admo->userPrivilegeAdministrator('role', ' (menghapus Jabatan ' . $role . ')');
 		
 		if ($role == 'Administrator')
 		{

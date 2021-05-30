@@ -50,6 +50,8 @@ class Vote_model extends CI_Model
 
 	public function addVote($url_periode = null)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
 		$id_mahasiswa = $this->input->post('id_mahasiswa', true);
 		$id_periode = $this->input->post('id_periode', true);
 
@@ -59,6 +61,8 @@ class Vote_model extends CI_Model
 
 		$periode = $this->pemo->getPeriodeById($id_periode);
 		$periode_new = $periode['periode'];
+
+		$this->admo->userPrivilegeTamu('vote/' . $url_periode, ' (menambahkan vote ' . $nama_new . ', ' . $periode_new . ')');
 
 		// check mahasiswa and periode
 		$check = $this->db->get_where('vote', ['id_mahasiswa' => $id_mahasiswa, 'id_periode' => $id_periode])->row_array();
@@ -86,7 +90,7 @@ class Vote_model extends CI_Model
 		$isi = 'Data vote ' . $nim_new . ', ' . $nama_new . ', ' . $periode_new . ' berhasil ditambahkan';
 		$this->session->set_flashdata('message-success', $isi);
 
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		if ($url_periode == null) 
 		{
@@ -100,6 +104,8 @@ class Vote_model extends CI_Model
 
 	// public function editVote($id, $url_periode = null)
 	// {
+	// 	$dataUser = $this->admo->getDataUserAdmin();
+
 	// 	$vote = $this->getVoteById($id);
 
 	// 	$data = [
@@ -121,7 +127,7 @@ class Vote_model extends CI_Model
 	// 	$isi = 'Data vote ' . $nim_new . ', ' . $nama_new . ', ' . $periode_new . ' berhasil diubah';
 	// 	$this->session->set_flashdata('message-success', $isi);
 		
-	// 	$id_user = $this->admo->getDataUserAdmin()['id_user'];
+	// 	$id_user = $dataUser['id_user'];
 	// 	$this->lomo->addLog($isi, $id_user);
 		
 	// 	if ($url_periode == null) 
@@ -136,6 +142,8 @@ class Vote_model extends CI_Model
 
 	public function removeVote($id, $url_periode = null)
 	{
+		$dataUser = $this->admo->getDataUserAdmin();
+
 		$vote = $this->getVoteById($id);
 		$id_mahasiswa = $vote['id_mahasiswa'];
 		$id_periode = $vote['id_periode'];
@@ -147,11 +155,13 @@ class Vote_model extends CI_Model
 		$periode = $this->pemo->getPeriodeById($id_periode);
 		$periode_old = $periode['periode'];
 
+		$this->admo->userPrivilegeTamu('vote/' . $url_periode, ' (menghapus vote ' . $nama_old . ', ' . $periode_old . ')');
+
 		$this->db->delete('vote', ['id_vote' => $id]);
 		$isi = 'Data vote ' . $nim_old . ', ' . $nama_old . ', ' . $periode_old . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
-		$id_user = $this->admo->getDataUserAdmin()['id_user'];
+		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
 		
 		if ($url_periode == null) 

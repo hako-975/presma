@@ -26,6 +26,7 @@ class Jurusan_model extends CI_Model
 		$dataUser = $this->admo->getDataUserAdmin();
 
 		$jurusan = ucwords(strtolower($this->input->post('jurusan', true)));
+		$this->admo->userPrivilegeTamu('jurusan', ' (menambahkan jurusan ' . $jurusan . ')');
 
 		$data = [
 			'jurusan' => $jurusan
@@ -45,6 +46,8 @@ class Jurusan_model extends CI_Model
 		$dataUser = $this->admo->getDataUserAdmin();
 
 		$jurusan = $this->getJurusanById($id)['jurusan'];
+		$this->admo->userPrivilegeTamu('jurusan', ' (mengubah jurusan ' . $jurusan . ')');
+
 
 		$data = [
 			'jurusan' => ucwords(strtolower($this->input->post('jurusan', true)))
@@ -65,7 +68,9 @@ class Jurusan_model extends CI_Model
 
 		$jurusan = $this->getJurusanById($id)['jurusan'];
 
-		$this->admo->userPrivilege('jurusan', ' (menghapus jurusan ' . $jurusan . ')');
+		$this->admo->userPrivilegeAdministrator('jurusan', ' (menghapus jurusan ' . $jurusan . ')');
+		$this->admo->userPrivilegeTamu('jurusan', ' (menghapus jurusan ' . $jurusan . ')');
+
 
 		$this->db->delete('jurusan', ['id_jurusan' => $id]);
 		$isi = 'Jurusan ' . $jurusan . ' berhasil dihapus';
