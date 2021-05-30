@@ -62,7 +62,7 @@ class Vote_model extends CI_Model
 		$periode = $this->pemo->getPeriodeById($id_periode);
 		$periode_new = $periode['periode'];
 
-		$this->admo->userPrivilegeTamu('vote/' . $url_periode, ' (menambahkan vote ' . $nama_new . ', ' . $periode_new . ')');
+		$this->admo->userPrivilegeTamu('vote/periode/' . $url_periode, ' (menambahkan vote ' . $nama_new . ', ' . $periode_new . ')');
 
 		// check mahasiswa and periode
 		$check = $this->db->get_where('vote', ['id_mahasiswa' => $id_mahasiswa, 'id_periode' => $id_periode])->row_array();
@@ -155,7 +155,7 @@ class Vote_model extends CI_Model
 		$periode = $this->pemo->getPeriodeById($id_periode);
 		$periode_old = $periode['periode'];
 
-		$this->admo->userPrivilegeTamu('vote/' . $url_periode, ' (menghapus vote ' . $nama_old . ', ' . $periode_old . ')');
+		$this->admo->userPrivilegeTamu('vote/periode/' . $url_periode, ' (menghapus vote ' . $nama_old . ', ' . $periode_old . ')');
 
 		$this->db->delete('vote', ['id_vote' => $id]);
 		$isi = 'Data vote ' . $nim_old . ', ' . $nama_old . ', ' . $periode_old . ' berhasil dihapus';
