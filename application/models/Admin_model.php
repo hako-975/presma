@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin_model extends CI_Model 
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('Log_model', 'lomo');
+	}
+	
 	public function checkLoginAdmin()
 	{
 		if (!$this->session->userdata('id_user')) 
@@ -63,6 +69,39 @@ class Admin_model extends CI_Model
 			$this->lomo->addLog($isi, $id_user);
 			redirect($redirect);
 			exit();
+		}
+	}
+
+	public function changePassword()
+	{
+		$dataUser = $this->getDataUserAdmin();
+		$id_user = $dataUser['id_user'];
+		
+		// check old password
+		$old_password = $this->input->post('old_password', true);
+		
+		if (password_verify($old_password, $dataUser['password']))
+		{
+			$new_password = password_hash($this->input->post('new_password', true), PASSWORD_DEFAULT);
+			
+			$data = [
+				'password' => $new_password
+			];
+
+			$this->db->update('user', $data, ['id_user' => $id_user]);
+			
+			$isi = 'Berhasil mengubah password';
+			$this->session->set_flashdata('message-success', $isi);
+			$this->lomo->addLog($isi, $id_user);
+			redirect('admin/profile');
+		}
+		else
+		{
+			$isi = 'Gagal mengubah password, password lama yang anda masukkan salah';
+			$this->session->set_flashdata('message-failed', $isi);
+			
+			$this->lomo->addLog($isi, $id_user);
+			redirect('admin/profile');
 		}
 	}
 }
