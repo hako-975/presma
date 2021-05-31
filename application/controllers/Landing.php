@@ -20,9 +20,8 @@ class Landing extends CI_Controller
 		}
 		
 		$id_periode 		= $this->pemo->getCurrentPeriode()['id_periode'];
-		$data['vote'] 		= $this->vomo->getVoteByPeriodeResult($id_periode);
-		$data['kandidat'] 	= $this->kamo->getKandidatByIdPeriode($id_periode);
-		$data['title']	= 'Selamat Datang';
+		$data['vote'] 		= $this->vomo->getVoteByPeriodeFinalResult($id_periode);
+		$data['title']	= 'Presma';
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('landing/index', $data);

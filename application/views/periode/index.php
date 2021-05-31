@@ -152,7 +152,11 @@ if (isset($behavior))
                                 </div>
                                 <div class="form-group">
                                   <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="aktif<?= $dp['id_periode']; ?>" name="aktif">
+                                    <?php if ($dp['aktif'] == 1): ?>
+                                      <input type="checkbox" class="form-check-input" id="aktif<?= $dp['id_periode']; ?>" name="aktif" checked>
+                                    <?php else: ?>
+                                      <input type="checkbox" class="form-check-input" id="aktif<?= $dp['id_periode']; ?>" name="aktif">
+                                    <?php endif ?>
                                     <label class="form-check-label" for="aktif<?= $dp['id_periode']; ?>">Aktif?</label>
                                   </div>
                                   <div class="invalid-feedback">
@@ -225,7 +229,7 @@ if (isset($behavior))
           </div>
           <div class="form-group">
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="aktif" name="aktif">
+              <input type="checkbox" class="form-check-input" id="aktif" name="aktif" checked="checked">
               <label class="form-check-label" for="aktif">Aktif?</label>
             </div>
             <div class="invalid-feedback">

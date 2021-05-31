@@ -57,8 +57,8 @@ if (isset($behavior))
                 <th class="text-center">Foto</th>
                 <th class="text-center">NIM</th>
                 <th class="text-center">Nama</th>
-                <th>Visi</th>
-                <th>Misi</th>
+                <th style="width: 50rem">Visi</th>
+                <th style="width: 50rem">Misi</th>
                 <th class="text-center">No. Urut</th>
                 <th class="text-center">Periode</th>
                 <?php if ($dataUser['role'] != 'Tamu'): ?>

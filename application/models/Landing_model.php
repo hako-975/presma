@@ -36,9 +36,15 @@ class Landing_model extends CI_Model
 					$this->session->set_userdata($dataSession);
 					redirect('landing/vote');
 				}
-				else
+				elseif ($dataVote['vote'] == 'sudah')
 				{
 					$isi = 'Anda telah melakukan voting';
+					$this->session->set_flashdata('message-failed', $isi);
+					redirect('landing/loginVote');
+				}
+				else
+				{
+					$isi = 'NIM Anda belum terdaftar, segera hubungi Administrator';
 					$this->session->set_flashdata('message-failed', $isi);
 					redirect('landing/loginVote');
 				}
