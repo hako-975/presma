@@ -33,6 +33,15 @@ textarea {
 .img-w-100 {
   width: 100px;
 }
+
+.img-w-300 {
+  width:  300px;
+}
+
+.img-300 {
+  width:  300px;
+  height:  300px;
+}
 /*------------ img-size ------------*/
 
 /*------------ table align-middle ------------*/
@@ -67,7 +76,5 @@ td {
   margin: 0!important;
   padding: 0!important;
 }
-
-
 
 /*------------ select2 ------------*/

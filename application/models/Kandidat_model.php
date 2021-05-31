@@ -23,6 +23,13 @@ class Kandidat_model extends CI_Model
 		return $this->db->get_where('kandidat', ['id_kandidat' => $id])->row_array();
 	}
 
+	public function getKandidatByIdPeriode($id_periode)
+	{
+		$this->db->order_by('no_urut', 'asc');
+		$this->db->join('periode', 'kandidat.id_periode = periode.id_periode');
+		return $this->db->get_where('kandidat', ['periode.id_periode' => $id_periode])->result_array();
+	}
+
 	public function addKandidat()
 	{
 		$dataUser = $this->admo->getDataUserAdmin();

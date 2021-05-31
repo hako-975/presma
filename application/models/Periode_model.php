@@ -27,6 +27,12 @@ class Periode_model extends CI_Model
 		return $this->db->get_where('periode', ['periode' => $periode])->row_array();
 	}
 
+	public function getCurrentPeriode()
+	{
+		$this->db->order_by('periode', 'asc');
+		return $this->db->get_where('periode', ['aktif' => '1'])->row_array();
+	}
+
 	public function addPeriode()
 	{
 		$dataUser = $this->admo->getDataUserAdmin();
@@ -51,8 +57,14 @@ class Periode_model extends CI_Model
 			exit;
 		}
 
+		if ($this->input->post('aktif', true)) 
+		{
+			$aktif = 1;
+		}
+
 		$data = [
-			'periode' => $periode
+			'periode' => $periode,
+			'aktif' => $aktif
 		];
 
 		$sql_periode = $this->db->insert('periode', $data);
@@ -108,17 +120,32 @@ class Periode_model extends CI_Model
 			}
 		}
 
+		if ($this->input->post('aktif', true)) 
+		{
+			$aktif = 1;
+		}
+
 		$data = [
 			'periode' => $periode_new,
-			'status' => $this->input->post('status', true)
+			'status' => $this->input->post('status', true),
+			'aktif' => $aktif
 		];
 		
 		$status = explode('_', $data['status']);
 		$status = implode(' ', $status);
 		$status = ucwords(strtolower($status));
 
+		if ($data['aktif'] == 0) 
+		{
+			$aktif = 'tidak aktif';
+		}
+		else
+		{
+			$aktif = 'aktif';
+		}
+
 		$this->db->update('periode', $data, ['id_periode' => $id]);
-		$isi = 'Periode ' . $periode_old . ' berhasil diubah menjadi ' . $periode_new . ' dengan status ' . $status;
+		$isi = 'Periode ' . $periode_old . ' berhasil diubah menjadi ' . $periode_new . ' dengan status ' . $status . ' dan ' . $aktif;
 		$this->session->set_flashdata('message-success', $isi);
 		
 		$id_user = $dataUser['id_user'];

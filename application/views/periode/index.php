@@ -56,6 +56,7 @@ if (isset($behavior))
                 <th>No.</th>
                 <th>Periode</th>
                 <th>Status</th>
+                <th>Aktif</th>
                 <?php if ($dataUser['role'] != 'Tamu'): ?>
                   <th style="width: 12.5rem">Aksi</th>
                 <?php endif ?>
@@ -73,6 +74,12 @@ if (isset($behavior))
                     $status = ucwords(strtolower($status));
                   ?>
                   <td><?= $status; ?></td>
+
+                  <?php if ($dp['aktif'] == 0): ?>
+                    <td><button type="button" class="btn btn-danger">Tidak Aktif</button></td>
+                  <?php else: ?>
+                    <td><button type="button" class="btn btn-success">Aktif</button></td>
+                  <?php endif ?>
                   <?php if ($dataUser['role'] != 'Tamu'): ?>
                     <td class="text-center">
                       <button type="button" data-toggle="modal" data-target="#editPeriodeModal<?= $dp['id_periode']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
@@ -143,6 +150,15 @@ if (isset($behavior))
                                     <?= form_error('status'); ?>
                                   </div>
                                 </div>
+                                <div class="form-group">
+                                  <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="aktif<?= $dp['id_periode']; ?>" name="aktif">
+                                    <label class="form-check-label" for="aktif<?= $dp['id_periode']; ?>">Aktif?</label>
+                                  </div>
+                                  <div class="invalid-feedback">
+                                    <?= form_error('aktif'); ?>
+                                  </div>
+                                </div>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
@@ -205,6 +221,15 @@ if (isset($behavior))
                   <?= form_error('sampai_tahun'); ?>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="aktif" name="aktif">
+              <label class="form-check-label" for="aktif">Aktif?</label>
+            </div>
+            <div class="invalid-feedback">
+              <?= form_error('aktif'); ?>
             </div>
           </div>
         </div>

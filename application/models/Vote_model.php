@@ -34,7 +34,7 @@ class Vote_model extends CI_Model
 		return $this->db->get_where('vote', ['id_vote' => $id])->row_array();
 	}
 
-	public function getVoteByPeriodeResult($periode)
+	public function getVoteByPeriodeResult($id_periode)
 	{
 		$this->db->select('*, mahasiswa.nama AS nama_mahasiswa, kandidat.nama AS nama_kandidat, periode.status AS status_periode');
 		$this->db->join('mahasiswa', 'vote.id_mahasiswa = mahasiswa.id_mahasiswa');
@@ -45,7 +45,7 @@ class Vote_model extends CI_Model
 		$this->db->order_by('rombel.semester', 'asc');
 		$this->db->order_by('jurusan.jurusan', 'asc');
 		$this->db->order_by('mahasiswa.nama', 'asc');
-		return $this->db->get_where('vote', ['periode' => $periode])->result_array();
+		return $this->db->get_where('vote', ['vote.id_periode' => $id_periode])->result_array();
 	}
 
 	public function addVote($url_periode = null)
