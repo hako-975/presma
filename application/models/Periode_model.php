@@ -39,6 +39,18 @@ class Periode_model extends CI_Model
 		
 		$mahasiswa = $this->mamo->getMahasiswa();
 
+		// cek ada mahasiswa atau tidak
+		if ($mahasiswa == false)
+		{
+			$isi = 'Isi Mahasiswa terlebih dahulu';
+			$this->session->set_flashdata('message-failed', $isi);
+
+			$id_user = $dataUser['id_user'];
+			$this->lomo->addLog($isi, $id_user);
+			redirect('periode');
+			exit;
+		}
+
 		$periode = $this->input->post('dari_tahun', true) . ' - ' . $this->input->post('sampai_tahun', true);
 		
 		$this->admo->userPrivilegeTamu('periode', ' (menambahkan periode ' . $periode . ')');
@@ -60,6 +72,8 @@ class Periode_model extends CI_Model
 		if ($this->input->post('aktif', true)) 
 		{
 			$aktif = 1;
+			// Update all of periode to deactive
+			$this->db->update('periode', ['aktif' => '0']);			
 		}
 
 		$data = [
@@ -123,6 +137,8 @@ class Periode_model extends CI_Model
 		if ($this->input->post('aktif', true)) 
 		{
 			$aktif = 1;
+			// Update all of periode to deactive
+			$this->db->update('periode', ['aktif' => '0']);			
 		}
 
 		$data = [

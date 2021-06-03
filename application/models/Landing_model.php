@@ -11,10 +11,11 @@ class Landing_model extends CI_Model
 		$this->load->model('Periode_model', 'pemo');
 	}
 
-	public function loginVote()
+	public function loginVote($id_periode)
 	{
 		$nim 		= $this->input->post('nim', true);
 		$password 	= $this->input->post('password', true);
+		$id_periode	= $this->input->post('id_periode', true);
 		
 		// check nim
 		$data = $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
@@ -25,7 +26,7 @@ class Landing_model extends CI_Model
 			if ($password == $currentPassword) 
 			{
 				// check status vote
-				$dataVote = $this->db->get_where('vote', ['id_mahasiswa' => $data['id_mahasiswa']])->row_array();
+				$dataVote = $this->db->get_where('vote', ['id_mahasiswa' => $data['id_mahasiswa'], 'id_periode' => $id_periode])->row_array();
 
 				if ($dataVote['vote'] == 'belum') 
 				{
@@ -40,20 +41,20 @@ class Landing_model extends CI_Model
 				{
 					$isi = 'Anda telah melakukan voting';
 					$this->session->set_flashdata('message-failed', $isi);
-					redirect('landing/loginVote');
+					redirect('landing/loginVote/' . $id_periode);
 				}
 				else
 				{
 					$isi = 'NIM Anda belum terdaftar, segera hubungi Administrator';
 					$this->session->set_flashdata('message-failed', $isi);
-					redirect('landing/loginVote');
+					redirect('landing/loginVote/' . $id_periode);
 				}
 			}
 			else
 			{
 				$isi = 'Password yang anda masukkan salah';
 				$this->session->set_flashdata('message-failed', $isi);
-				redirect('landing/loginVote');
+				redirect('landing/loginVote/' . $id_periode);
 			}	
 			
 		}
@@ -61,20 +62,20 @@ class Landing_model extends CI_Model
 		{
 			$isi = 'NIM yang anda masukkan salah atau belum terdaftar';
 			$this->session->set_flashdata('message-failed', $isi);
-			redirect('landing/loginVote');
+			redirect('landing/loginVote/' . $id_periode);
 		}
 	}
 
 	public function voteKandidat($id_kandidat, $id_mahasiswa, $id_periode)
 	{
 		if (!isset($_SESSION['id_mahasiswa'])) {
-			redirect('landing/loginVote');
+			redirect('landing/loginVote/' . $id_periode);
 			exit;	
 		}
 
 		if ($id_mahasiswa != $_SESSION['id_mahasiswa']) 
 		{
-			redirect('landing/loginVote');
+			redirect('landing/loginVote/' . $id_periode);
 			exit;
 		}
 

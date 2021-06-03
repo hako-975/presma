@@ -59,7 +59,7 @@ class Vote extends CI_Controller
 
 		$data['title']			= 'Vote ' . $periode;
 		$data['rombel']			= $this->romo->getRombel();
-		$data['vote_periode']	= $this->vomo->getVoteByPeriodeResult($id_periode);
+		$data['vote_periode']	= $this->vomo->getVoteByPeriodeMany($id_periode);
 		$data['row_periode']	= $this->pemo->getPeriodeByPeriode($periode);
 		$data['mahasiswa']		= $this->mamo->getMahasiswa();
 		$data['kandidat']		= $this->kamo->getKandidat();

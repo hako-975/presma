@@ -25,13 +25,21 @@
 /*------------ textarea ------------*/
 textarea {
   min-height: 90px;
-  max-height: 120px;
+  max-height: 200px;
 }
 /*------------ textarea ------------*/
 
 /*------------ img-size ------------*/
 .img-w-100 {
   width: 100px;
+}
+
+.img-w-150 {
+  width: 150px;
+}
+
+.img-w-200 {
+  width: 200px;
 }
 
 .img-w-300 {

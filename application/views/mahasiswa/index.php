@@ -70,7 +70,7 @@ if (isset($behavior))
                   <td><?= $i++; ?></td>
                   <td><?= $dm['nim']; ?></td>
                   <td><?= $dm['nama']; ?></td>
-                  <td><?= $dm['tgl_lahir']; ?></td>
+                  <td><?= date('d-m-Y', strtotime($dm['tgl_lahir'])); ?></td>
                   <td><?= $dm['jurusan']; ?>, semester <?= $dm['semester']; ?></td>
                   <?php if ($dataUser['role'] != 'Tamu'): ?>
                     <td class="text-center">

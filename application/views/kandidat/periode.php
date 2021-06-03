@@ -17,7 +17,7 @@ if (isset($behavior))
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user-tie"></i> Kandidat</h1>
+        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user-tie"></i> Kandidat <?= $row_periode['periode']; ?></h1>
       </div>
       <?php if ($dataUser['role'] != 'Tamu'): ?>
         <div class="col header-button">
@@ -60,7 +60,6 @@ if (isset($behavior))
                 <th style="width: 50rem">Visi</th>
                 <th style="width: 50rem">Misi</th>
                 <th class="text-center">No. Urut</th>
-                <th class="text-center">Periode</th>
                 <?php if ($dataUser['role'] != 'Tamu'): ?>
                   <th style="width: 12.5rem">Aksi</th>
                 <?php endif ?>
@@ -68,7 +67,7 @@ if (isset($behavior))
             </thead>
             <tbody>
               <?php $i = 1; ?>
-              <?php foreach ($kandidat as $dk): ?>
+              <?php foreach ($kandidat_periode as $dk): ?>
                 <tr>
                   <td class="text-center"><?= $i++; ?></td>
                   <td class="text-center">
@@ -89,7 +88,6 @@ if (isset($behavior))
                     <td><?= $dk['misi']; ?></td>
                   <?php endif ?>
                   <td class="text-center"><?= $dk['no_urut']; ?></td>
-                  <td class="text-center"><?= $dk['periode']; ?></td>
                   <?php if ($dataUser['role'] != 'Tamu'): ?>
                     <td class="text-center">
                       <button type="button" data-toggle="modal" data-target="#editKandidatModal<?= $dk['id_kandidat']; ?>" class="btn btn-sm btn-success m-1"><i class="fas fa-fw fa-edit"></i> Ubah</button>
@@ -97,7 +95,8 @@ if (isset($behavior))
                       <!-- Modal -->
                       <div class="modal fade text-left" id="editKandidatModal<?= $dk['id_kandidat']; ?>" tabindex="-1" aria-labelledby="editKandidatModalLabel<?= $dk['id_kandidat']; ?>" aria-hidden="true">
                         <div class="modal-dialog">
-                          <form method="post" action="<?= base_url('kandidat/editKandidat/' . $dk['id_kandidat']); ?>" enctype="multipart/form-data">
+                          <form method="post" action="<?= base_url('kandidat/editKandidat/' . $dk['id_kandidat'] . '/' .  $row_periode['periode']); ?>" enctype="multipart/form-data">
+                            <input type="hidden" name="id_periode" value="<?= $row_periode['id_periode']; ?>">
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h5 class="modal-title" id="editKandidatModalLabel<?= $dk['id_kandidat']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah Kandidat</h5>
@@ -159,28 +158,6 @@ if (isset($behavior))
                                     <?= form_error('no_urut'); ?>
                                   </div>
                                 </div>
-                                <div class="form-group">
-                                  <label for="id_periode" class="font-weight-normal">Periode</label>
-                                  <select id="id_periode" class="custom-select <?= (form_error('id_periode')) ? 'is-invalid' : ''; ?>" name="id_periode" required>
-                                    <?php if (set_value('id_periode') != null): ?>
-                                      <?php 
-                                        $id_periode_old = set_value('id_periode');
-                                        $periode_old = $this->db->get_where('periode', ['id_periode' => $id_periode_old])->row_array();
-                                      ?>
-                                      <option value="<?= set_value('id_periode'); ?>"><?= $periode_old['periode']; ?></option>
-                                    <?php else: ?>
-                                      <option value="<?= $dk['id_periode']; ?>"><?= $dk['periode']; ?></option>
-                                    <?php endif ?>
-                                    <?php foreach ($periode as $dp): ?>
-                                      <?php if ($dk['id_periode'] != $dp['id_periode']): ?>
-                                        <option value="<?= $dp['id_periode']; ?>"><?= $dp['periode']; ?></option>
-                                      <?php endif ?>
-                                    <?php endforeach ?>
-                                  </select>
-                                  <div class="invalid-feedback">
-                                    <?= form_error('id_periode'); ?>
-                                  </div>
-                                </div>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
@@ -205,9 +182,11 @@ if (isset($behavior))
 <!-- /.content -->
 
 <!-- Modal -->
-<div class="modal fade" id="addKandidatModal" tabindex="-1" aria-labelledby="addKandidatModalLabel" aria-hidden="true">
+<!-- tabindex="-1" -->
+<div class="modal fade" id="addKandidatModal"  aria-labelledby="addKandidatModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form method="post" enctype="multipart/form-data">
+      <input type="hidden" name="id_periode" value="<?= $row_periode['id_periode']; ?>">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addKandidatModalLabel"><i class="fas fa-fw fa-plus"></i> Tambah Kandidat</h5>
@@ -276,30 +255,6 @@ if (isset($behavior))
               <?= form_error('no_urut'); ?>
             </div>
           </div>
-          <div class="form-group">
-            <label for="id_periode" class="font-weight-normal">Periode</label>
-            <select id="id_periode" class="custom-select <?= (form_error('id_periode')) ? 'is-invalid' : ''; ?>" name="id_periode" required>
-              <?php if (set_value('id_periode') != null): ?>
-                <?php 
-                  $id_periode_old = set_value('id_periode');
-                  $periode_old = $this->db->get_where('periode', ['id_periode' => $id_periode_old])->row_array();
-                ?>
-                <option value="<?= set_value('id_periode'); ?>"><?= $periode_old['periode']; ?></option>
-              <?php endif ?>
-              <?php foreach ($periode as $dp): ?>
-                <?php if (set_value('id_periode') != null): ?>
-                  <?php if ($id_periode_old != $dp['id_periode']): ?>
-                    <option value="<?= $dp['id_periode']; ?>"><?= $dp['periode']; ?></option>
-                  <?php endif ?>
-                <?php else: ?>
-                  <option value="<?= $dp['id_periode']; ?>"><?= $dp['periode']; ?></option>
-                <?php endif ?>
-              <?php endforeach ?>
-            </select>
-            <div class="invalid-feedback">
-              <?= form_error('id_periode'); ?>
-            </div>
-          </div>
         </div>
         <div class="modal-footer">
           <?php if (isset($behavior)): ?>
@@ -314,3 +269,34 @@ if (isset($behavior))
   </div>
 </div>
 <!-- /.Modal -->
+
+<script type="text/javascript">
+  $(document).ready(function()
+  {
+    var BASE_URL = "<?= base_url(); ?>";
+
+    $("#fg-mahasiswa").hide();
+
+    $('body').on("change", "#id_rombel", function() 
+    {
+      $('#id_mahasiswa')
+      .find('option')
+      .remove()
+      .end();
+
+      var id = $(this).val();
+      var data = "id="+id+"&data=mahasiswa";
+      $.ajax({
+        type: 'POST',
+        url: BASE_URL + 'kandidat/get_mahasiswa',
+        data: data,
+        success: function(hasil) {
+          $("#id_mahasiswa").html(hasil);
+          console.log(hasil);
+          $("#fg-mahasiswa").show();
+        }
+      });
+    });
+  });
+</script>
+

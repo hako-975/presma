@@ -30,13 +30,21 @@ class Kandidat_model extends CI_Model
 		return $this->db->get_where('kandidat', ['periode.id_periode' => $id_periode])->result_array();
 	}
 
-	public function addKandidat()
+	public function getKandidatByPeriodeResult($id_periode)
+	{
+		$this->db->order_by('no_urut', 'asc');
+		$this->db->join('periode', 'kandidat.id_periode = periode.id_periode');
+		return $this->db->get_where('kandidat', ['periode.id_periode' => $id_periode])->result_array();
+	}
+	
+
+	public function addKandidat($url_periode = null)
 	{
 		$dataUser = $this->admo->getDataUserAdmin();
 		
 		$nama = ucwords(strtolower($this->input->post('nama', true)));
 
-		$this->admo->userPrivilegeTamu('kandidat', ' (menambahkan kandidat ' . $nama . ')');
+		$this->admo->userPrivilegeTamu('kandidat/periode/' . $url_periode, ' (menambahkan kandidat ' . $nama . ')');
 
 		$foto_kandidat = $_FILES['foto_kandidat']['name'];
 		if ($foto_kandidat) 
@@ -76,14 +84,21 @@ class Kandidat_model extends CI_Model
 
 		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
-		redirect('kandidat');
+		if ($url_periode == null) 
+		{
+			redirect('kandidat');
+		}
+		else
+		{
+			redirect('kandidat/periode/' . $url_periode);
+		}
 	}
 
-	public function editKandidat($id)
+	public function editKandidat($id_kandidat, $url_periode = null)
 	{
 		$dataUser = $this->admo->getDataUserAdmin();
 		
-		$kandidat = $this->getKandidatById($id);
+		$kandidat = $this->getKandidatById($id_kandidat);
 		$nim_old = $kandidat['nim'];
 		$nama_old = $kandidat['nama'];
 		$no_urut_old = $kandidat['no_urut'];
@@ -105,7 +120,14 @@ class Kandidat_model extends CI_Model
 
 				$id_user = $dataUser['id_user'];
 				$this->lomo->addLog($isi, $id_user);
-				redirect('kandidat');
+				if ($url_periode == null) 
+				{
+					redirect('kandidat');
+				}
+				else
+				{
+					redirect('kandidat/periode/' . $url_periode);
+				}
 				exit;
 			}
 		}
@@ -122,7 +144,14 @@ class Kandidat_model extends CI_Model
 
 				$id_user = $dataUser['id_user'];
 				$this->lomo->addLog($isi, $id_user);
-				redirect('kandidat');
+				if ($url_periode == null) 
+				{
+					redirect('kandidat');
+				}
+				else
+				{
+					redirect('kandidat/periode/' . $url_periode);
+				}
 				exit;
 			}
 		}
@@ -160,30 +189,44 @@ class Kandidat_model extends CI_Model
 			'id_periode' => $this->input->post('id_periode', true)
 		];
 
-		$this->db->update('kandidat', $data, ['id_kandidat' => $id]);
+		$this->db->update('kandidat', $data, ['id_kandidat' => $id_kandidat]);
 		$isi = 'Kandidat ' . $nim_old . ', Nama: ' . $nama_old . ', No. Urut: ' . $no_urut . ' berhasil diubah menjadi ' . $nim_new . ', Nama: ' . $data['nama'] . ', No. Urut: ' . $no_urut_new;
 		$this->session->set_flashdata('message-success', $isi);
 		
 		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
-		redirect('kandidat');
+		if ($url_periode == null) 
+		{
+			redirect('kandidat');
+		}
+		else
+		{
+			redirect('kandidat/periode/' . $url_periode);
+		}
 	}
 
-	public function removeKandidat($id)
+	public function removeKandidat($id_kandidat, $url_periode = null)
 	{
 		$dataUser = $this->admo->getDataUserAdmin();
 		
-		$kandidat = $this->getKandidatById($id);
+		$kandidat = $this->getKandidatById($id_kandidat);
 		$nama_old = $kandidat['nama'];
 		$nim_old = $kandidat['nim'];
 		$this->admo->userPrivilegeTamu('kandidat', ' (menghapus kandidat ' . $nama_old . ')');
 
-		$this->db->delete('kandidat', ['id_kandidat' => $id]);
+		$this->db->delete('kandidat', ['id_kandidat' => $id_kandidat]);
 		$isi = 'Kandidat ' . $nim_old . ', ' . $nama_old . ' berhasil dihapus';
 		$this->session->set_flashdata('message-success', $isi);
 		
 		$id_user = $dataUser['id_user'];
 		$this->lomo->addLog($isi, $id_user);
-		redirect('kandidat');
+		if ($url_periode == null) 
+		{
+			redirect('kandidat');
+		}
+		else
+		{
+			redirect('kandidat/periode/' . $url_periode);
+		}
 	}
 }

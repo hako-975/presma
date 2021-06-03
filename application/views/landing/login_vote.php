@@ -2,7 +2,20 @@
 	<div class="row my-3 justify-content-center">
 		<div class="col-lg-4 border border-dark p-4 rounded">
 			<h3>Masuk Vote</h3>
-			<form method="post">
+			<form method="post" action="<?= base_url('landing/loginVote/' . $this->uri->segment(3)); ?>">
+				<?php if ($this->uri->segment(3)): ?>
+					<!-- check periode is active -->
+					<?php 
+						$periode = $this->db->get_where('periode', ['id_periode' => $this->uri->segment(3)])->row_array();
+					?>
+					<?php if ($periode['aktif'] == '1'): ?>
+						<input type="hidden" name="id_periode" value="<?= $this->uri->segment(3); ?>">
+					<?php else: ?>
+						<?php redirect("landing"); ?>
+					<?php endif ?>
+				<?php else: ?>
+					<?php redirect("landing"); ?>
+				<?php endif ?>
 				<div class="form-group">
 					<label class="font-weight-normal" for="nim"><i class="fas fa-fw fa-user"></i> NIM</label>
 					<input type="number" id="nim" class="form-control <?= (form_error('nim')) ? 'is-invalid' : ''; ?>" name="nim" required value="<?= set_value('nim'); ?>">

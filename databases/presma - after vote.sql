@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jun 2021 pada 04.51
+-- Waktu pembuatan: 03 Jun 2021 pada 05.14
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 7.4.19
 
@@ -117,7 +117,10 @@ INSERT INTO `log` (`id_log`, `isi_log`, `tgl_log`, `id_user`) VALUES
 (29, 'Kandidat 201011402132, Nama: Yunita, No. Urut:  berhasil diubah menjadi 201011402132, Nama: Yunita, No. Urut: 4', 1622688375, 1),
 (30, 'Kandidat 201011402132, Nama: Yunita, No. Urut:  berhasil diubah menjadi 201011402132, Nama: Yunita, No. Urut: 3', 1622688445, 1),
 (31, 'Kandidat 201011402132, Nama: Yunita, No. Urut:  berhasil diubah menjadi 201011402132, Nama: Yunita, No. Urut: 4', 1622688497, 1),
-(32, 'Kandidat 201011402132, Nama: Yunita, No. Urut:  berhasil diubah menjadi 201011402132, Nama: Yunita, No. Urut: 3', 1622688618, 1);
+(32, 'Kandidat 201011402132, Nama: Yunita, No. Urut:  berhasil diubah menjadi 201011402132, Nama: Yunita, No. Urut: 3', 1622688618, 1),
+(33, 'Periode 2021 - 2022 berhasil diubah menjadi 2021 - 2022 dengan status Belum Selesai dan tidak aktif', 1622688848, 2),
+(34, 'Periode 2021 - 2022 berhasil diubah menjadi 2021 - 2022 dengan status Belum Selesai dan aktif', 1622689253, 2),
+(35, 'Periode 2021 - 2022 berhasil diubah menjadi 2021 - 2022 dengan status Sudah Selesai dan aktif', 1622689967, 2);
 
 -- --------------------------------------------------------
 
@@ -162,7 +165,7 @@ CREATE TABLE `periode` (
 --
 
 INSERT INTO `periode` (`id_periode`, `periode`, `status`, `aktif`) VALUES
-(1, '2021 - 2022', 'belum_selesai', 1);
+(1, '2021 - 2022', 'sudah_selesai', 1);
 
 -- --------------------------------------------------------
 
@@ -248,11 +251,11 @@ CREATE TABLE `vote` (
 --
 
 INSERT INTO `vote` (`id_vote`, `vote`, `tgl_vote`, `id_mahasiswa`, `id_kandidat`, `id_periode`) VALUES
-(1, 'belum', NULL, 1, NULL, 1),
-(2, 'belum', NULL, 2, NULL, 1),
-(3, 'belum', NULL, 3, NULL, 1),
-(4, 'belum', NULL, 4, NULL, 1),
-(5, 'belum', NULL, 5, NULL, 1);
+(1, 'sudah', 1622688740, 1, 3, 1),
+(2, 'sudah', 1622689312, 2, 1, 1),
+(3, 'sudah', 1622689909, 3, 2, 1),
+(4, 'sudah', 1622689939, 4, 3, 1),
+(5, 'sudah', 1622689954, 5, 3, 1);
 
 --
 -- Indexes for dumped tables
@@ -340,7 +343,7 @@ ALTER TABLE `kandidat`
 -- AUTO_INCREMENT untuk tabel `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT untuk tabel `mahasiswa`
