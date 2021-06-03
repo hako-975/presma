@@ -35,10 +35,13 @@ class Admin extends CI_Controller
 		}
 		else
 		{
-			$periode 			 = $this->pemo->getLastPeriode();
-			$id_periode 		 = $periode['id_periode'];
-			$data['row_periode'] = $periode; 
-			$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
+			$periode 			 	 = $this->pemo->getLastPeriode();
+			if ($periode != null) 
+			{
+				$id_periode 		 = $periode['id_periode'];
+				$data['row_periode'] = $periode; 
+				$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
+			}
 		}
 
 		$this->load->view('templates/header-admin', $data);

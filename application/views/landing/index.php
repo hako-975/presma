@@ -79,12 +79,16 @@
 				<?php endif ?>	
 			</div>
 		</div>
-	<?php endif ?>
-	<div class="row">
-		<div class="col-lg">
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil perferendis aliquid inventore quam? Ad ipsa nostrum dolorum natus autem sit tempore quas minus unde magnam eveniet delectus ut aspernatur, similique voluptas laboriosam pariatur! Quod expedita cupiditate itaque, dolor! Non hic possimus vel, harum, dolorem necessitatibus error iure at consequuntur, officiis laborum quaerat aperiam similique eum veritatis debitis nihil, blanditiis numquam aspernatur repellendus ea! Incidunt nisi provident, distinctio fugit harum, sapiente cumque amet eveniet doloribus fuga.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing, elit. Non aperiam laudantium fugiat accusamus eligendi quis delectus. Beatae ipsum natus quasi cum praesentium, asperiores velit eius molestias, ex? Fugit, at, iusto. Debitis aut neque, maxime laborum deleniti ipsa illo, dolores illum ea consequuntur officiis minus eum possimus inventore fugiat officia, esse suscipit vitae aperiam. Omnis, minus iste nemo nobis quos, delectus deleniti sequi sit voluptatum laudantium eum laboriosam, fuga tempore alias? Omnis laboriosam voluptatibus facere quas ipsam, officia commodi aut quam est adipisci, sapiente repellat voluptatum, perferendis dolore atque maiores. Magni nihil pariatur quasi corporis velit quibusdam cum exercitationem odio, veritatis!</p>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia quia voluptatem non, labore facere, saepe earum modi. Incidunt illum corrupti sit delectus nostrum voluptatum provident id asperiores ab harum unde a quaerat quo magni consequatur, odio dignissimos, alias esse et minus vel soluta. Magnam deserunt alias fuga saepe dolorem est.</p>
+	<?php else: ?>
+		<div class="row my-3">
+			<div class="col-lg">
+				<h2>Belum ada Pemilihan Presiden Mahasiswa</h2>
 			</div>
-	</div>
+		</div>	
+	<?php endif ?>
+	<!-- <div class="row">
+		<div class="col-lg">
+			<p>Untuk para mahasiswa pilihlah calon presiden mahasiswa sesuai dengan hati nurani kalian, bukan karena suruhan ataupun sogokan.</p>
+		</div>
+	</div> -->
 </div>

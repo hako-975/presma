@@ -1,7 +1,7 @@
 <div class="container mt-5 pt-5">
 	<div class="row my-3 justify-content-center">
 		<div class="col-lg-4 border border-dark p-4 rounded">
-			<h3>Masuk</h3>
+			<h3>Masuk Admin</h3>
 			<form method="post">
 				<div class="form-group">
 					<label class="font-weight-normal" for="username"><i class="fas fa-fw fa-user"></i> Username</label>

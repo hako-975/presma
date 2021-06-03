@@ -21,13 +21,17 @@
               Periode
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <?php foreach ($this->db->get('periode')->result_array() as $periode): ?>
-              <?php if ($periode['aktif'] == 1): ?>
-                <a class="dropdown-item" href="<?= base_url('landing/index/') . $periode['periode']; ?>"><?= $periode['periode']; ?> (Saat Ini)</a>
+              <?php if ($this->db->get('periode')->result_array()): ?>
+                <?php foreach ($this->db->get('periode')->result_array() as $periode): ?>
+                  <?php if ($periode['aktif'] == 1): ?>
+                    <a class="dropdown-item" href="<?= base_url('landing/index/') . $periode['periode']; ?>"><?= $periode['periode']; ?> (Saat Ini)</a>
+                  <?php else: ?>
+                    <a class="dropdown-item" href="<?= base_url('landing/index/') . $periode['periode']; ?>"><?= $periode['periode']; ?></a>
+                  <?php endif ?>
+                <?php endforeach ?>
               <?php else: ?>
-                <a class="dropdown-item" href="<?= base_url('landing/index/') . $periode['periode']; ?>"><?= $periode['periode']; ?></a>
+                <a class="dropdown-item" href="#">Belum ada</a>
               <?php endif ?>
-              <?php endforeach ?>
             </div>
           </div>
         </div>
