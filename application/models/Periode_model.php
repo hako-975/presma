@@ -32,6 +32,11 @@ class Periode_model extends CI_Model
 		$this->db->order_by('periode', 'asc');
 		return $this->db->get_where('periode', ['aktif' => '1'])->row_array();
 	}
+	public function getLastPeriode()
+	{
+		$this->db->order_by('periode', 'desc');
+		return $this->db->get('periode')->row_array();
+	}
 
 	public function addPeriode()
 	{

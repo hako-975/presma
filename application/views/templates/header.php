@@ -17,19 +17,19 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <div class="dropdown">
-          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Periode
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <?php foreach ($this->db->get('periode')->result_array() as $periode): ?>
-            <?php if ($periode['aktif'] == 1): ?>
-              <a class="dropdown-item" href="<?= base_url('landing/index/') . $periode['periode']; ?>"><?= $periode['periode']; ?> (Saat Ini)</a>
-            <?php else: ?>
-              <a class="dropdown-item" href="<?= base_url('landing/index/') . $periode['periode']; ?>"><?= $periode['periode']; ?></a>
-            <?php endif ?>
-            <?php endforeach ?>
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Periode
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <?php foreach ($this->db->get('periode')->result_array() as $periode): ?>
+              <?php if ($periode['aktif'] == 1): ?>
+                <a class="dropdown-item" href="<?= base_url('landing/index/') . $periode['periode']; ?>"><?= $periode['periode']; ?> (Saat Ini)</a>
+              <?php else: ?>
+                <a class="dropdown-item" href="<?= base_url('landing/index/') . $periode['periode']; ?>"><?= $periode['periode']; ?></a>
+              <?php endif ?>
+              <?php endforeach ?>
+            </div>
           </div>
-        </div>
         </div>
         <div class="navbar-nav ml-auto">
           <a class="nav-link" href="<?= base_url('admin'); ?>">Admin</a>

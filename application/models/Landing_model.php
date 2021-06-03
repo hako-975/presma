@@ -16,51 +16,62 @@ class Landing_model extends CI_Model
 		$nim 		= $this->input->post('nim', true);
 		$password 	= $this->input->post('password', true);
 		$id_periode	= $this->input->post('id_periode', true);
+
+		$dataPeriode = $this->pemo->getPeriodeById($id_periode); 
 		
-		// check nim
-		$data = $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
-		if ($data) 
+		// cek status periode apakah sudah selesai atau belum
+		if ($dataPeriode['status'] == 'belum_selesai') 
 		{
-			$currentPassword = date('dmy', strtotime($data['tgl_lahir']));
-
-			if ($password == $currentPassword) 
+			// check nim
+			$data = $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
+			if ($data) 
 			{
-				// check status vote
-				$dataVote = $this->db->get_where('vote', ['id_mahasiswa' => $data['id_mahasiswa'], 'id_periode' => $id_periode])->row_array();
+				$currentPassword = date('dmy', strtotime($data['tgl_lahir']));
 
-				if ($dataVote['vote'] == 'belum') 
+				if ($password == $currentPassword) 
 				{
-					$dataSession = [
-						'id_mahasiswa' => $data['id_mahasiswa']
-					];
+					// check status vote
+					$dataVote = $this->db->get_where('vote', ['id_mahasiswa' => $data['id_mahasiswa'], 'id_periode' => $id_periode])->row_array();
 
-					$this->session->set_userdata($dataSession);
-					redirect('landing/vote');
-				}
-				elseif ($dataVote['vote'] == 'sudah')
-				{
-					$isi = 'Anda telah melakukan voting';
-					$this->session->set_flashdata('message-failed', $isi);
-					redirect('landing/loginVote/' . $id_periode);
+					if ($dataVote['vote'] == 'belum') 
+					{
+						$dataSession = [
+							'id_mahasiswa' => $data['id_mahasiswa']
+						];
+
+						$this->session->set_userdata($dataSession);
+						redirect('landing/vote');
+					}
+					elseif ($dataVote['vote'] == 'sudah')
+					{
+						$isi = 'Anda telah melakukan voting';
+						$this->session->set_flashdata('message-failed', $isi);
+						redirect('landing/loginVote/' . $id_periode);
+					}
+					else
+					{
+						$isi = 'NIM Anda belum terdaftar, segera hubungi Administrator';
+						$this->session->set_flashdata('message-failed', $isi);
+						redirect('landing/loginVote/' . $id_periode);
+					}
 				}
 				else
 				{
-					$isi = 'NIM Anda belum terdaftar, segera hubungi Administrator';
+					$isi = 'Password yang anda masukkan salah';
 					$this->session->set_flashdata('message-failed', $isi);
 					redirect('landing/loginVote/' . $id_periode);
-				}
+				}	
 			}
 			else
 			{
-				$isi = 'Password yang anda masukkan salah';
+				$isi = 'NIM yang anda masukkan salah atau belum terdaftar';
 				$this->session->set_flashdata('message-failed', $isi);
 				redirect('landing/loginVote/' . $id_periode);
-			}	
-			
+			}		
 		}
 		else
 		{
-			$isi = 'NIM yang anda masukkan salah atau belum terdaftar';
+			$isi = 'Pemilihan pada periode ini sudah selesai';
 			$this->session->set_flashdata('message-failed', $isi);
 			redirect('landing/loginVote/' . $id_periode);
 		}

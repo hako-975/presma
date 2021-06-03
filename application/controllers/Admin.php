@@ -7,15 +7,40 @@ class Admin extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Admin_model', 'admo');
+		$this->load->model('Periode_model', 'pemo');
+		$this->load->model('Vote_model', 'vomo');
 	}
 
-	public function index()
+	public function index($periode = null)
 	{
 		$this->admo->checkLoginAdmin();
 
 		$data['dataUser']	= $this->admo->getDataUserAdmin();
 		$data['title']		= 'Dasbor';
 		
+		if ($this->pemo->getCurrentPeriode())
+		{
+			$periode 			 = $this->pemo->getCurrentPeriode();
+			$id_periode 		 = $periode['id_periode'];
+			$data['row_periode'] = $periode; 
+			$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
+		}
+		else if ($periode)
+		{
+			$periode 			 = urldecode($periode);
+			$periode 			 = $this->pemo->getPeriodeByPeriode($periode);
+			$id_periode 		 = $periode['id_periode'];
+			$data['row_periode'] = $periode; 
+			$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
+		}
+		else
+		{
+			$periode 			 = $this->pemo->getLastPeriode();
+			$id_periode 		 = $periode['id_periode'];
+			$data['row_periode'] = $periode; 
+			$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
+		}
+
 		$this->load->view('templates/header-admin', $data);
 		$this->load->view('admin/index', $data);
 		$this->load->view('templates/footer-admin', $data);

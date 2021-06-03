@@ -35,15 +35,21 @@ class Landing extends CI_Controller
 			$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
 		}
 
-		
-		$data['title']			= 'Presma - ' . $periode['periode'];
+		if (isset($periode['periode'])) 
+		{
+			$data['title']			= 'Presma - ' . $periode['periode'];
+		}
+		else
+		{
+			$data['title']			= 'Presma';
+		}
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('landing/index', $data);
 		$this->load->view('templates/footer', $data);
 	}
 
-	public function loginVote($id_periode)
+	public function loginVote($id_periode = 0)
 	{
 		if (isset($_SESSION['id_mahasiswa'])) {
 			redirect('landing/vote');	

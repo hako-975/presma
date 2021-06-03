@@ -60,21 +60,6 @@ class Vote_model extends CI_Model
 		return $this->db->get_where('vote', ['vote.id_periode' => $id_periode])->result_array();
 	}
 
-	public function getVoteFinalResult()
-	{
-		$this->db->select('*, mahasiswa.nama AS nama_mahasiswa, kandidat.nama AS nama_kandidat, periode.status AS status_periode, count(vote.id_mahasiswa) as perolehan_suara');
-		$this->db->join('mahasiswa', 'vote.id_mahasiswa = mahasiswa.id_mahasiswa');
-		$this->db->join('rombel', 'mahasiswa.id_rombel = rombel.id_rombel');
-		$this->db->join('jurusan', 'rombel.id_jurusan = jurusan.id_jurusan');
-		$this->db->join('kandidat', 'vote.id_kandidat = kandidat.id_kandidat', 'LEFT');
-		$this->db->join('periode', 'vote.id_periode = periode.id_periode');
-		$this->db->order_by('kandidat.no_urut', 'asc');
-		$this->db->order_by('perolehan_suara', 'desc');
-		$this->db->group_by('kandidat.id_kandidat');
-		return $this->db->get_where('vote', ['periode.status' => 'sudah_selesai'])->result_array();
-	}
-
-
 	public function addVote($url_periode = null)
 	{
 		$dataUser = $this->admo->getDataUserAdmin();
