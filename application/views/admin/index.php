@@ -32,7 +32,12 @@
       </div>
     </div>
     <?php if (isset($row_periode)): ?>
-      <h3>Perolehan Suara Periode <?= $row_periode['periode']; ?></h3>
+      <h3 style="display: inline-block;">Perolehan Suara Periode <?= $row_periode['periode']; ?></h3>
+      <?php if ($dataUser['role'] != 'Tamu'): ?>
+        <?php if ($row_periode['status'] == 'belum_selesai'): ?>
+          <a href="<?= base_url('admin/editStatusPeriode/' . $row_periode['id_periode']); ?>" class="btn btn-danger ml-2 mb-3 btn-selesai" data-nama="<?= $row_periode['periode']; ?>">Sudah Selesai?</a>
+        <?php endif ?>
+      <?php endif ?>
       <canvas id="myChart"></canvas>
     <?php endif ?>
   </div>

@@ -63,7 +63,7 @@ if (isset($behavior))
                   <th>Kandidat</th>
                 <?php endif ?>
                 <th>Vote</th>
-                <?php if ($dataUser['role'] != 'Tamu'): ?>
+                <?php if ($dataUser['role'] == 'Administrator'): ?>
                   <th style="width: 12.5rem">Aksi</th>
                 <?php endif ?>
               </tr>
@@ -92,7 +92,7 @@ if (isset($behavior))
                       <button type="button" class="btn btn-sm btn-success"><i class="fas fa-fw fa-check"></i> <?= ucwords($dv['vote']); ?></button>
                     <?php endif ?>
                   </td>
-                  <?php if ($dataUser['role'] != 'Tamu'): ?>
+                  <?php if ($dataUser['role'] == 'Administrator'): ?>
                     <td class="text-center">
                       <a href="<?= base_url('vote/removeVote/' . $dv['id_vote'] . '/' . $row_periode['periode']); ?>" class="btn btn-sm btn-danger m-1 btn-delete" data-nama="vote <?= $dv['nama_mahasiswa']; ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                     </td>

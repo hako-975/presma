@@ -1,7 +1,8 @@
-<div class="container">
+<div class="container pt-2">
 	<div class="row my-3">
 		<div class="col-lg">
-			<h2 class="text-center">Pemilihan Presiden Mahasiswa Periode <?= $vote[0]['periode']; ?></h2>
+			<h3 class="text-center text-white">Pemilihan Presiden Mahasiswa Periode <?= $vote[0]['periode']; ?></h3>
+			<hr style="width: 75%; background-color: white;">
 		</div>
 	</div>
 	<div class="row justify-content-center my-3">

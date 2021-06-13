@@ -63,4 +63,26 @@ $(document).ready(function()
 		  }
 		});
 	});
+
+	$('.btn-selesai').on('click', function(e){
+		e.preventDefault();
+
+		const href = $(this).attr('href');
+		const nama 	= $(this).data('nama');
+
+		Swal.fire({
+		  title: 'Apakah anda yakin?',
+		  text: "Ingin menyelesaikan pemilihan periode " + nama + '!',
+		  icon: 'warning',
+		  showCancelButton: true,
+		  cancelButtonColor: '#3085d6',
+		  confirmButtonColor: '#d33',
+		  confirmButtonText: 'Sudah Selesai!',
+		  cancelButtonText: 'Batal'
+		}).then((result) => {
+		  if (result.value) {
+		    document.location.href = href;
+		  }
+		});
+	});
 });

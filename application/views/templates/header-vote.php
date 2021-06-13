@@ -5,4 +5,4 @@
   <?php include 'include/css.php'; ?>
   <title><?= $title; ?></title>
 </head>
-<body>
+<body style="background-color: #016C30;">

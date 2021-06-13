@@ -174,6 +174,25 @@ class Periode_model extends CI_Model
 		redirect('periode');
 	}
 
+	public function editStatusPeriode($id_periode)
+	{
+		$dataUser = $this->admo->getDataUserAdmin();
+		
+		$periode_old = $this->getPeriodeById($id_periode)['periode'];
+
+		$data = [
+			'status' => 'sudah_selesai'
+		];
+
+		$this->db->update('periode', $data, ['id_periode' => $id_periode]);
+		$isi = 'Periode ' . $periode_old . ' berhasil diubah statusnya menjadi Sudah Selesai';
+		$this->session->set_flashdata('message-success', $isi);
+		
+		$id_user = $dataUser['id_user'];
+		$this->lomo->addLog($isi, $id_user);
+		redirect('admin');
+	}
+
 	public function removePeriode($id)
 	{
 		$dataUser = $this->admo->getDataUserAdmin();

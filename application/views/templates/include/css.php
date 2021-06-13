@@ -16,8 +16,8 @@
 <link rel="stylesheet" href="<?= base_url('assets/vendor/fancybox/css/jquery.fancybox.min.css'); ?>">
 <!-- select2 -->
 <link rel="stylesheet" href="<?= base_url('assets/vendor/select2/css/select2.min.css'); ?>">
-<!-- Google Font: Source Sans Pro -->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <!-- My CSS -->
 <link rel="stylesheet" href="<?= base_url('assets/css/presma.css'); ?>">
 <!-- Favicon -->

@@ -18,7 +18,8 @@ class Landing extends CI_Controller
 			redirect('landing/vote');
 			exit;	
 		}
-		
+
+		// for search
 		if ($periode != null) 
 		{
 			$periode 			 = urldecode($periode);
@@ -26,13 +27,30 @@ class Landing extends CI_Controller
 			$id_periode 		 = $periode['id_periode'];
 			$data['row_periode'] = $periode; 
 			$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
+
+			if ($periode['status'] == "belum_selesai" && $periode['aktif'] == '1') 
+			{
+				redirect('landing/loginVote/' . $id_periode);
+				exit;	
+			}
 		}
-		else if ($this->pemo->getCurrentPeriode())
+		elseif ($this->pemo->getCurrentPeriode())
 		{
-			$periode 			 = $this->pemo->getCurrentPeriode();
-			$id_periode 		 = $periode['id_periode'];
-			$data['row_periode'] = $periode; 
-			$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
+			if ($this->pemo->getCurrentPeriode()['status'] == "belum_selesai") 
+			{
+				$periode 			 = $this->pemo->getCurrentPeriode();
+				$id_periode 		 = $periode['id_periode'];
+				/*$data['row_periode'] = $periode; 
+				$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);*/
+				redirect('landing/loginVote/' . $id_periode);
+			}
+			elseif ($this->pemo->getCurrentPeriode()['status'] == "sudah_selesai") 
+			{
+				$periode 			 = $this->pemo->getCurrentPeriode();
+				$id_periode 		 = $periode['id_periode'];
+				$data['row_periode'] = $periode; 
+				$data['vote'] 		 = $this->vomo->getVoteByPeriodeResult($id_periode);
+			}
 		}
 
 		if (isset($periode['periode'])) 
@@ -51,11 +69,18 @@ class Landing extends CI_Controller
 
 	public function loginVote($id_periode = 0)
 	{
+		$periode = $this->pemo->getPeriodeById($id_periode);
+
 		if (isset($_SESSION['id_mahasiswa'])) {
 			redirect('landing/vote');	
 		}
 
-		$data['title']		= 'Masuk Vote';
+		if ($this->pemo->getCurrentPeriode()['status'] == "sudah_selesai")
+		{
+			redirect('landing');
+		}
+
+		$data['title']		= 'Masuk Vote | Periode ' . $periode['periode'];
 		
 		$this->form_validation->set_rules('nim', 'NIM', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
@@ -96,10 +121,10 @@ class Landing extends CI_Controller
 		}
 	}
 
-	public function afterVote($isi = '')
+	public function afterVote($isi = '', $id_periode)
 	{
 		$isi = urldecode($isi);
 		$this->session->set_flashdata('message-success', $isi);
-		redirect('landing');
+		redirect('landing/loginVote/' . $id_periode);
 	}
 }

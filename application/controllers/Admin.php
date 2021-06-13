@@ -67,4 +67,10 @@ class Admin extends CI_Controller
 		    $this->admo->changePassword();
 		}
 	}
+
+	public function editStatusPeriode($id_periode)
+	{
+		$this->admo->checkLoginAdmin();
+		$this->pemo->editStatusPeriode($id_periode);
+	}
 }

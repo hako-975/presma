@@ -56,6 +56,7 @@ class Vote_model extends CI_Model
 		$this->db->order_by('rombel.semester', 'asc');
 		$this->db->order_by('jurusan.jurusan', 'asc');
 		$this->db->order_by('mahasiswa.nama', 'asc');
+		$this->db->order_by('kandidat.no_urut', 'asc');
 		$this->db->group_by('kandidat.id_kandidat');
 		return $this->db->get_where('vote', ['vote.id_periode' => $id_periode])->result_array();
 	}
@@ -168,6 +169,7 @@ class Vote_model extends CI_Model
 		$periode_old = $periode['periode'];
 
 		$this->admo->userPrivilegeTamu('vote/periode/' . $url_periode, ' (menghapus vote ' . $nama_old . ', ' . $periode_old . ')');
+		$this->admo->userPrivilegeAdministrator('vote/periode/' . $url_periode, ' (menghapus vote ' . $nama_old . ', ' . $periode_old . ')');
 
 		$this->db->delete('vote', ['id_vote' => $id]);
 		$isi = 'Data vote ' . $nim_old . ', ' . $nama_old . ', ' . $periode_old . ' berhasil dihapus';

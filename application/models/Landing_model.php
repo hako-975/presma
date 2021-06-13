@@ -103,6 +103,6 @@ class Landing_model extends CI_Model
 		$periode = $this->pemo->getPeriodeById($id_periode);
 		$isi = 'Anda ' . $mahasiswa['nama'] . ' telah berhasil melakukan vote kandidat ' . $kandidat['nama'] . ' periode ' . $periode['periode'];
 		session_destroy();		
-		redirect('landing/afterVote/' . $isi);
+		redirect('landing/afterVote/' . $isi . '/' . $id_periode);
 	}
 }
