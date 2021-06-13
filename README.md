@@ -27,6 +27,19 @@ Aplikasi Presma adalah aplikasi Presiden Mahasiswa, yang digunakan untuk pemilih
 10. Pilih Periode yang ingin diubah statusnya menjadi selesai.  
 11. Biarkan status Aktifnya centang biru.  
 12. Informasikan kepada mahasiswa bahwa voting telah selesai dan mengakses link utama untuk melihat pemenangnya.  
+## Langkah - langkah pemilihan (Operator)  
+1. Klik tombol Admin pada navbar diatas kanan.  
+2. Untuk login Operator defaultnya. Pada kolom Usernamenya : operator  
+3. Pada kolom Passwordnya : operator, anda dapat mengubah passwordnya pada halaman profil pada sidebar setelah login.  
+4. Menambahkan Jurusan untuk mahasiswa.  
+5. Menambahkan Rombel untuk mahasiswa.  
+6. Menambahkan semua mahasiswa.  
+7. Menambahkan Periode sesuai dengan tahunnya.  
+8. Menambahkan Kandidat.  
+9. Setelah semua mahasiswa melakukan voting, masuk ke halaman Periode.  
+10. Pilih Periode yang ingin diubah statusnya menjadi selesai.  
+11. Biarkan status Aktifnya centang biru.  
+12. Informasikan kepada mahasiswa bahwa voting telah selesai dan mengakses link utama untuk melihat pemenangnya.  
 ## Langkah - langkah pemilihan (Mahasiswa)  
 1. Mahasiswa mengakses link.  
 2. Pada kolom NIM masukkan NIM mahasiswa.  
@@ -36,4 +49,7 @@ Aplikasi Presma adalah aplikasi Presiden Mahasiswa, yang digunakan untuk pemilih
 6. kemudian pilih tombol vote berwarna merah lagi.  
 7. Setelah semua mahasiswa selesai voting, tunggu saja dihalaman login vote.  
 8. Menunggu Administrator mengubah status periodenya.  
-
+## Langkah - langkah pemilihan (Tamu)  
+1. Klik tombol Admin pada navbar diatas kanan.  
+2. Untuk login tamu defaultnya. Pada kolom Usernamenya : tamu  
+3. Pada kolom Passwordnya : tamu  
