@@ -9,6 +9,7 @@ Aplikasi Presma adalah aplikasi Presiden Mahasiswa, yang digunakan untuk pemilih
 - Menampilkan hasil pemenang dengan jelas.  
 - Menampilkan hasil voting (Untuk mengaktifkan fitur ini, administrator harus mengubah status periode dari belum selesai menjadi sudah selesai).  
 - Memiliki fitur role (Administrator, Operator, dan tamu).  
+- Jika password tamu telah diganti, Administrator dapat menambahkan tamu baru dan operator baru (Jika diperlukan).  
 ## Hal - hal yang harus dipersiapkan untuk mahasiswa dan administrator 
 - Aplikasi harus dihosting.  
 - Memiliki Koneksi Internet.  
