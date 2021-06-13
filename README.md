@@ -4,10 +4,10 @@ Aplikasi Presma adalah aplikasi Presiden Mahasiswa, yang digunakan untuk pemilih
 - Cross Platform (bisa digunakan untuk: Smartphone, Laptop, PC, Tablet dan lain-lain).  
 - Bisa digunakan untuk jangka panjang.  
 - Memiliki fitur chart.  
-- Autofill mahasiswa voting (** Mahasiswa dapat melakukan voting jika namanya sudah tersedia di tabel vote **).  
+- Autofill mahasiswa voting (Mahasiswa dapat melakukan voting jika namanya sudah tersedia di tabel vote).  
 - Mudah dibersihkan periodenya, dengan menghapus baris periode akan membersihkan kandidat dan hasil voting, serta periode tersebut bisa digunakan kembali.  
 - Menampilkan hasil pemenang dengan jelas.  
-- Menampilkan hasil voting (Untuk mengaktifkan fitur ini, administrator harus mengubah status periode dari ** belum selesai ** menjadi ** sudah selesai **).  
+- Menampilkan hasil voting (Untuk mengaktifkan fitur ini, administrator harus mengubah status periode dari belum selesai menjadi sudah selesai).  
 - Memiliki fitur role (Administrator, Operator, dan tamu).  
 ## Hal - hal yang harus dipersiapkan untuk mahasiswa dan administrator 
 - Aplikasi harus dihosting.  
