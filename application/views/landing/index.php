@@ -71,7 +71,7 @@
 								        </button>
 								      </div>
 								      <div class="modal-body p-5">
-										<img src="<?= base_url('assets/img/img_candidates/') . $kandidat_winner['foto_kandidat']; ?>" class="card-img-top img-fluid mb-3" alt="Foto Kandidat">
+										<img src="<?= base_url('assets/img/img_candidates/') . $kandidat_winner['foto_kandidat']; ?>" class="card-img-top img-300-200 mb-3" alt="Foto Kandidat">
 										<h3><?= $kandidat_winner['nama']; ?></h3>
 										<hr style="width: 50%">
 										<h4 class="text-left">Visi</h5>
@@ -142,7 +142,7 @@
 											        </button>
 											      </div>
 											      <div class="modal-body p-5">
-													<img src="<?= base_url('assets/img/img_candidates/') . $dv['foto_kandidat']; ?>" class="card-img-top img-fluid mb-3" height="300" alt="Foto Kandidat">
+													<img src="<?= base_url('assets/img/img_candidates/') . $dv['foto_kandidat']; ?>" class="card-img-top img-300-200 mb-3" height="300" alt="Foto Kandidat">
 													<h3><?= $dv['nama']; ?></h3>
 													<hr style="width: 50%">
 													<h4 class="text-left">Visi</h5>
