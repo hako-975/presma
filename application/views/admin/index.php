@@ -1,9 +1,9 @@
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
-    <div class="row mb-2">
+    <div class="row">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-tachometer-alt"></i> Dasbor</h1>
+        <h4 class="m-0 text-dark"><i class="fas fa-fw fa-tachometer-alt"></i> Dasbor</h4>
       </div>
     </div>
   </div>
@@ -32,10 +32,10 @@
       </div>
     </div>
     <?php if (isset($row_periode)): ?>
-      <h3 style="display: inline-block;">Perolehan Suara Periode <?= $row_periode['periode']; ?></h3>
+      <h5 style="display: inline-block;">Perolehan Suara Periode <?= $row_periode['periode']; ?></h5>
       <?php if ($dataUser['role'] != 'Tamu'): ?>
         <?php if ($row_periode['status'] == 'belum_selesai'): ?>
-          <a href="<?= base_url('admin/editStatusPeriode/' . $row_periode['id_periode']); ?>" class="btn btn-danger ml-2 mb-3 btn-selesai" data-nama="<?= $row_periode['periode']; ?>">Sudah Selesai?</a>
+          <a href="<?= base_url('admin/editStatusPeriode/' . $row_periode['id_periode']); ?>" class="btn btn-sm btn-danger ml-2 mb-3 btn-selesai" data-nama="<?= $row_periode['periode']; ?>">Sudah Selesai?</a>
         <?php endif ?>
       <?php endif ?>
       <canvas id="myChart"></canvas>

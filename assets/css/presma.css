@@ -6,11 +6,14 @@
 
 /*------------ android size ------------*/
 @media (max-width: 576px) {
-.mx-5-android {
-  margin-right: 3rem !important;
-  margin-left: 3rem !important;
-}
-
+  .mx-5-android {
+    margin-right: 3rem !important;
+    margin-left: 3rem !important;
+  }
+  .img-300-150 {
+    width:  200px!important;
+    height:  200px!important;
+  }
 }
 /*------------ android size ------------*/
 
@@ -81,6 +84,11 @@ textarea {
   width:  300px;
   height:  300px;
 }
+.img-300-150 {
+  width:  300px;
+  height:  300px;
+}
+
 /*------------ img-size ------------*/
 
 /*------------ table align-middle ------------*/

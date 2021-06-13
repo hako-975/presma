@@ -35,10 +35,10 @@
 						$kandidat_winner = $this->db->get_where('vote', ['vote.id_periode' => $row_periode['id_periode'], 'kandidat.id_kandidat' => $winner['id_kandidat']])->row_array();
 					?>
 					<!-- col winner -->
-					<div class="col-lg p-3 mx-2 mx-5-android rounded bg-gold">
+					<div class="col-lg p-3 mx-3 rounded bg-gold">
 						<h3 class="text-center text-white text-shadow">Selamat!</h3>
-						<div class="card text-dark m-3 mx-auto" style="width: 300px">
-							<img src="<?= base_url('assets/img/img_candidates/') . $kandidat_winner['foto_kandidat']; ?>" class="card-img-top img-300" alt="Foto Kandidat">
+						<div class="card text-dark m-3 mx-auto">
+							<img src="<?= base_url('assets/img/img_candidates/') . $kandidat_winner['foto_kandidat']; ?>" class="card-img-top img-fluid" height="300" alt="Foto Kandidat">
 							<div class="card-body text-center">
 								<h3><small>No. Urut</small> <?= $kandidat_winner['no_urut']; ?></h3>
 								<h5><?= $kandidat_winner['nama']; ?></h5>
@@ -62,7 +62,7 @@
 
 								<!-- Modal -->
 								<div class="modal fade" id="visiMisiModal<?= $kandidat_winner['id_kandidat']; ?>" tabindex="-1" aria-labelledby="visiMisiModalLabel<?= $kandidat_winner['id_kandidat']; ?>" aria-hidden="true">
-								  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+								  <div class="modal-dialog modal-lg">
 								    <div class="modal-content">
 								      <div class="modal-header">
 								        <h5 class="modal-title" id="visiMisiModalLabel<?= $kandidat_winner['id_kandidat']; ?>">Kandidat No. <?= $kandidat_winner['no_urut']; ?> | <?= $kandidat_winner['nama']; ?></h5>
@@ -71,7 +71,7 @@
 								        </button>
 								      </div>
 								      <div class="modal-body p-5">
-										<img src="<?= base_url('assets/img/img_candidates/') . $kandidat_winner['foto_kandidat']; ?>" class="card-img-top img-300 mb-3" alt="Foto Kandidat">
+										<img src="<?= base_url('assets/img/img_candidates/') . $kandidat_winner['foto_kandidat']; ?>" class="card-img-top img-fluid mb-3" alt="Foto Kandidat">
 										<h3><?= $kandidat_winner['nama']; ?></h3>
 										<hr style="width: 50%">
 										<h4 class="text-left">Visi</h5>
@@ -103,9 +103,9 @@
 
 						<?php if ($dv['id_kandidat'] != null): ?>
 							<?php if ($dv['id_kandidat'] != $winner['id_kandidat']): ?>
-								<div class="col-lg mx-2 pt-5 mx-5-android">
-									<div class="card text-dark m-3 mx-auto" style="width: 275px">
-										<img src="<?= base_url('assets/img/img_candidates/') . $dv['foto_kandidat']; ?>" class="card-img-top img-275" alt="Foto Kandidat">
+								<div class="col-lg mx-3 pt-5">
+									<div class="card text-dark m-3 mx-auto">
+										<img src="<?= base_url('assets/img/img_candidates/') . $dv['foto_kandidat']; ?>" class="card-img-top img-fluid" height="300" alt="Foto Kandidat">
 										<div class="card-body text-center">
 											<h4><small>No. Urut</small> <?= $dv['no_urut']; ?></h4>
 											<h6><?= $dv['nama']; ?></h6>
@@ -133,7 +133,7 @@
 
 											<!-- Modal -->
 											<div class="modal fade" id="visiMisiModal<?= $dv['id_kandidat']; ?>" tabindex="-1" aria-labelledby="visiMisiModalLabel<?= $dv['id_kandidat']; ?>" aria-hidden="true">
-											  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+											  <div class="modal-dialog modal-lg">
 											    <div class="modal-content">
 											      <div class="modal-header">
 											        <h5 class="modal-title" id="visiMisiModalLabel<?= $dv['id_kandidat']; ?>">Kandidat No. <?= $dv['no_urut']; ?> | <?= $dv['nama']; ?></h5>
@@ -142,7 +142,7 @@
 											        </button>
 											      </div>
 											      <div class="modal-body p-5">
-													<img src="<?= base_url('assets/img/img_candidates/') . $dv['foto_kandidat']; ?>" class="card-img-top img-300 mb-3" alt="Foto Kandidat">
+													<img src="<?= base_url('assets/img/img_candidates/') . $dv['foto_kandidat']; ?>" class="card-img-top img-fluid mb-3" height="300" alt="Foto Kandidat">
 													<h3><?= $dv['nama']; ?></h3>
 													<hr style="width: 50%">
 													<h4 class="text-left">Visi</h5>

@@ -5,11 +5,11 @@
 			<hr style="width: 75%; background-color: white;">
 		</div>
 	</div>
-	<div class="row justify-content-center my-3">
+	<div class="row justify-content-center m-3">
 		<?php foreach ($kandidat as $dk): ?>
-			<div class="col-lg">
-				<div class="card m-3 mx-auto" style="width: 300px">
-					<img src="<?= base_url('assets/img/img_candidates/') . $dk['foto_kandidat']; ?>" class="card-img-top img-300" alt="Foto Kandidat">
+			<div class="col-lg-4">
+				<div class="card m-3 mx-auto">
+					<img src="<?= base_url('assets/img/img_candidates/') . $dk['foto_kandidat']; ?>" class="card-img-top" height="300" alt="Foto Kandidat">
 					<div class="card-body text-center">
 						<h2><?= $dk['no_urut']; ?></h2>
 						<h5><?= $dk['nama']; ?></h5>
@@ -21,7 +21,7 @@
 
 						<!-- Modal -->
 						<div class="modal fade" id="visiMisiModal<?= $dk['id_kandidat']; ?>" tabindex="-1" aria-labelledby="visiMisiModalLabel<?= $dk['id_kandidat']; ?>" aria-hidden="true">
-						  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+						  <div class="modal-dialog modal-lg">
 						    <div class="modal-content">
 						      <div class="modal-header">
 						        <h5 class="modal-title" id="visiMisiModalLabel<?= $dk['id_kandidat']; ?>">Kandidat No. <?= $dk['no_urut']; ?> | <?= $dk['nama']; ?></h5>
@@ -30,7 +30,7 @@
 						        </button>
 						      </div>
 						      <div class="modal-body p-5">
-								<img src="<?= base_url('assets/img/img_candidates/') . $dk['foto_kandidat']; ?>" class="card-img-top img-300 mb-3" alt="Foto Kandidat">
+								<img src="<?= base_url('assets/img/img_candidates/') . $dk['foto_kandidat']; ?>" class="card-img-top img-fluid mb-3" height="300" alt="Foto Kandidat">
 								<h3><?= $dk['nama']; ?></h3>
 								<hr style="width: 50%">
 								<h4 class="text-left">Visi</h5>

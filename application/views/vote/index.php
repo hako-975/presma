@@ -17,11 +17,11 @@ if (isset($behavior))
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-vote-yea"></i> Vote</h1>
+        <h4 class="m-0 text-dark"><i class="fas fa-fw fa-vote-yea"></i> Vote</h4>
       </div>
       <?php if ($dataUser['role'] != 'Tamu'): ?>
         <div class="col header-button">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVoteModal"><i class="fas fa-fw fa-plus"></i> Tambah Vote</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVoteModal"><small><i class="fas fa-fw fa-plus"></i> Tambah Vote</small></button>
         </div>
       <?php endif ?>
     </div>

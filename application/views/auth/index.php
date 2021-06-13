@@ -1,5 +1,5 @@
 <div class="container mt-5">
-	<div class="row mx-5 my-3 justify-content-center">
+	<div class="row m-3 justify-content-center">
 		<div class="col-lg-4 bg-white p-4 border rounded">
 			<h4 class="text-center py-3">Masuk Admin</h4>
 			<form method="post">

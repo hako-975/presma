@@ -1,9 +1,9 @@
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
-    <div class="row mb-2">
+    <div class="row">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-fw fa-user"></i> Profil</h1>
+        <h4 class="m-0 text-dark"><i class="fas fa-fw fa-user"></i> Profil</h4>
       </div>
     </div>
   </div>

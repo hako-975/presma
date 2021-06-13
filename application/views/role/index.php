@@ -15,13 +15,13 @@ if (isset($behavior))
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
-    <div class="row mb-2">
+    <div class="row">
       <div class="col header-title">
-        <h1 class="m-0 text-dark"><i class="fas fa-id-card-alt"></i> Jabatan</h1>
+        <h4 class="m-0 text-dark"><i class="fas fa-id-card-alt"></i> Jabatan</h4>
       </div>
       <?php if ($dataUser['role'] == 'Administrator'): ?>
         <div class="col header-button">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoleModal"><i class="fas fa-fw fa-plus"></i> Tambah Jabatan</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoleModal"><small><i class="fas fa-fw fa-plus"></i> Tambah Jabatan</small></button>
         </div>
       <?php endif ?>
     </div>
